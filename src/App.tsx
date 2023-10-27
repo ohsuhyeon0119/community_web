@@ -1,11 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
 import { Thread } from './pages/Thread';
 import { Create } from './components/Create';
 import { Home } from './pages/Home';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import Test from './pages/Test';
+import { Nav } from './Nav';
 export const apiURL = import.meta.env.VITE_API_URL;
 
 function Login() {
@@ -121,29 +121,14 @@ function Header() {
     </>
   );
 }
-function Nav() {
+function ScreenLayout() {
   return (
-    <div className="Nav">
-      <div className="grid-container">
-        <div className="grid-item">
-          <Link style={{ color: 'black' }} to="/">
-            HOME
-          </Link>
-          <br />
-          <p>hot topic -클릭시 #이동하고, boards로 클릭하면 사라진다.</p>
-          <p>저번에 했더 velog 라우팅 기능 구현</p>
-          <p>hot topic</p>
-        </div>
-        <div className="grid-item">
-          <Link style={{ color: 'black' }} to="/">
-            BOARDS
-          </Link>
-        </div>
-        <div className="grid-item">
-          <Link style={{ color: 'black' }} to="/">
-            USERS
-          </Link>
-        </div>
+    <div className="ScreenLayout">
+      <div className="navContainer">
+        <Nav></Nav>
+      </div>
+      <div className="mainContainer">
+        <Outlet></Outlet>
       </div>
     </div>
   );
@@ -152,15 +137,17 @@ function Nav() {
 function App() {
   return (
     <>
-      <Nav></Nav>
-      {/*<Header></Header>*/}
       <Routes>
-        <Route path="/" element={<Home></Home>}></Route>
-        <Route path="/thread/:id" element={<Thread></Thread>}></Route>
-        <Route path="/signup" element={<SignUp></SignUp>}></Route>
-        <Route path="/login" element={<Login></Login>}></Route>
+        <Route path="/:nav?" element={<ScreenLayout></ScreenLayout>}>
+          {/* nav는 선택적으로 들어간다.  nested 된 애들은 /를 붙이면 안된다. */}
+          <Route path="" element={<Home></Home>}></Route>
+          <Route path="thread/:id" element={<Thread></Thread>}></Route>
+          <Route path="signup" element={<SignUp></SignUp>}></Route>
+          <Route path="login" element={<Login></Login>}></Route>
+          <Route path="test" element={<Test></Test>}></Route>
+        </Route>
       </Routes>
-      <Create></Create>
+      {/*<Create></Create>*/}
     </>
   );
 }

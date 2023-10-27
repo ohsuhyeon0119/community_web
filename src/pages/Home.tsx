@@ -2,29 +2,7 @@ import { useEffect, useState } from 'react';
 import { ThreadsList } from '../components/ThreadsList';
 import styled, { keyframes, css } from 'styled-components';
 
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  width: 300px;
-  height: 300px;
-`;
-
-const Cell = styled.div`
-  border: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-`;
-
-const NewDiv = styled.div`
-  background-color: blue;
-  width: 80%;
-  height: 80%;
-  position: absolute;
-`;
-
+import ListContainer from './Test';
 interface LogoProps {
   islogofaded: string | undefined;
 }
@@ -90,31 +68,6 @@ const Mycomponent = styled.span<LogoProps>`
 export function Home() {
   const [islogofaded, setIsLogoFaded] = useState(false);
 
-  const createRandomDivs = () => {
-    const divs = [];
-    const positions = [];
-    while (divs.length < 10) {
-      const randomIndex = Math.floor(Math.random() * 25);
-      //positions에 randomIndex가 없으면
-
-      if (!positions.includes(randomIndex)) {
-        positions.push(randomIndex);
-        divs.push(
-          <NewDiv
-            key={divs.length}
-            style={
-              {
-                //   top: `${Math.floor(randomIndex / 5) * 20}%`,
-                //  left: `${(randomIndex % 5) * 20}%`,
-              }
-            }
-          />
-        );
-      }
-    }
-    return divs;
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setIsLogoFaded(true);
@@ -143,12 +96,7 @@ export function Home() {
           세상의 모든 이야기가 만나는 곳
         </TextComponent>
         <p>hot topic</p>
-
-        <Grid>
-          {Array.from({ length: 25 }, (_, index) => (
-            <Cell key={index}>{index < 10 && createRandomDivs()}</Cell>
-          ))}
-        </Grid>
+        <ListContainer></ListContainer>
       </main>
     </>
   );
