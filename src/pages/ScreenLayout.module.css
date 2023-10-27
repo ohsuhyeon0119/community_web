@@ -1,0 +1,42 @@
+.screenLayout {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  grid-template-rows: 1fr 100px;
+  width: 100%;
+  height: 100%;
+}
+
+.Nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 0px;
+  position: fixed;
+  height: 100%;
+  width: 150px;
+  justify-content: space-around;
+}
+
+.navLayout {
+  background-color: white;
+  border-right: 3px solid rgb(222, 212, 212);
+}
+.mainLayout {
+  margin-left: 70px;
+}
+
+.navButton {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  transform: scale(1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.navButton:hover {
+  background-color: rgba(192, 192, 192, 0.7);
+  transform: scale(1.1);
+}
