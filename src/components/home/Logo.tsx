@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
+import styles from './../../pages/Home.module.css';
 
 interface StyledLogoProps {
-  fadeIn: string | undefined;
+  fadein: string | undefined;
 }
 interface StyledSloganProps {
-  fadeIn: string | undefined;
+  fadein: string | undefined;
 }
 const StyledSlogan = styled.p<StyledSloganProps>`
   opacity: 0;
   font-size: 20px;
   color: black;
   animation: ${(props) =>
-    props.fadeIn === 'fadeIn'
+    props.fadein === 'fadein'
       ? css`
-          ${fadeIn} 1s ease-in-out forwards
+          ${fadein} 1s ease-in-out forwards
         `
       : 'none'};
   animation-delay: 0.8s;
@@ -27,7 +28,7 @@ const StyledLogo = styled.span<StyledLogoProps>`
     margin-right: 0.2em;
     opacity: 0;
     animation: ${(props) =>
-      props.fadeIn === 'fadeIn'
+      props.fadein === 'fadein'
         ? css`
             ${fadeOut} 1s ease-in-out forwards
           `
@@ -38,7 +39,7 @@ const StyledLogo = styled.span<StyledLogoProps>`
     animation-delay: 0.4s;
   }
 `;
-const fadeIn = keyframes`
+const fadein = keyframes`
 from {
   opacity: 0;
   transform: translateY(+100%);
@@ -71,18 +72,19 @@ export function Logo() {
   const logoLetters = ['G', 'E', 'T', 'W', 'O', 'R', 'L', 'D'];
 
   return (
-    <>
+    <div className={styles.Logowrapper}>
       {logoLetters.map((str, index) => {
         return (
-          <StyledLogo key={index} fadeIn={islogofaded ? 'fadeIn' : undefined}>
+          <StyledLogo key={index} fadein={islogofaded ? 'fadein' : undefined}>
             <span className={`letter letter_${str}`}> {str}</span>
           </StyledLogo>
         );
       })}
 
-      <StyledSlogan fadeIn={islogofaded ? 'fadeIn' : undefined}>
-        세상의 모든 이야기가 만나는 곳
+      <StyledSlogan fadein={islogofaded ? 'fadein' : undefined}>
+        세상의 수많은 이야기를 공유해주세요, 당신의 의견을 적어주세요, 이
+        커뮤니티에.
       </StyledSlogan>
-    </>
+    </div>
   );
 }

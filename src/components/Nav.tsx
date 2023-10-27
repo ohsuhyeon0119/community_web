@@ -15,7 +15,7 @@ export function Nav() {
   const nav = location.pathname.split('/')[1];
 
   return (
-    <IconContext.Provider value={{ size: '50px' }}>
+    <IconContext.Provider value={{ size: '30px' }}>
       <div className={styles.Nav}>
         <div
           onClick={() => {

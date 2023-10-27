@@ -13,10 +13,19 @@
   /* 애니메이션  */
   transform: translateY(0rem);
   box-shadow: 1px 1px 3px 1px rgba(78, 120, 97, 0.3);
-  transition: box-shadow 0.3s, transform 0.3s;
+  transition: box-shadow 0.3s, transform 0.3s, opacity 2s;
 
   padding: 5px;
+  opacity: 0;
 }
+.alreadyShown {
+  opacity: 1;
+}
+
+.inView {
+  opacity: 1;
+}
+
 .threadItem > * {
   cursor: pointer;
 }
@@ -74,10 +83,52 @@ h3 {
   word-break: keep-all;
 }
 .home-threadItem-Container {
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  width: 900px;
+  width: 100%;
+}
+
+.Logowrapper {
+  margin-bottom: 100px;
+}
+.logoAndLoginWrapper {
+  margin-top: 150px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+.LoginBox {
+  padding: 50px;
+}
+.loginButton,
+.signupButton {
+  width: 300px;
+  height: 50px;
+
+  border: 5px solid black;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 10px;
+
+  margin-bottom: 40px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: font-size 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginButton:hover,
+.signupButton:hover {
+  font-size: 24px;
+}
+
+.explanationWrapper {
+  padding: 30px;
+  border-top: 1px solid rgb(222, 222, 222);
+  border-bottom: 1px solid rgb(222, 222, 222);
+  margin-right: 60px;
+  line-height: 50px;
 }
