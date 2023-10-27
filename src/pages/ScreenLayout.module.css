@@ -34,6 +34,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: white;
+  transform: scale(1);
   transition: background-color 0.3s, transform 0.3s;
 }
 .navButton:hover {
@@ -54,4 +56,23 @@
   width: 100%;
   text-align: center;
   color: rgb(131, 130, 130);
+}
+.createButton {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: red;
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+  background-color: rgba(240, 232, 232, 0.878);
+  transform: scale(1);
+  transition: background-color 0.3s, transform 0.3s;
+}
+.createButton:hover {
+  background-color: rgba(192, 192, 192, 0.7);
+  transform: scale(1.1);
 }
