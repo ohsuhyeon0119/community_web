@@ -9,6 +9,12 @@ import { ScreenLayout } from './pages/ScreenLayout';
 import { Login } from './pages/Login';
 export const apiURL = import.meta.env.VITE_API_URL;
 
+export interface Board {
+  boardName: string;
+  boardColor: string;
+  threadsId: number[];
+}
+
 export interface Thread {
   title: string;
   id: Number;
@@ -16,6 +22,7 @@ export interface Thread {
   content: string;
   date: Date;
   liked: number;
+  boardName: string;
 }
 
 function App() {

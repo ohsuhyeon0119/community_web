@@ -10,6 +10,7 @@ export function ThreadsList() {
       }[]
     | null
   >(null);
+
   useEffect(() => {
     fetch(apiURL + '/threadlist')
       .then((response) => {
