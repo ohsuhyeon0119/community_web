@@ -3,10 +3,20 @@ import './App.css';
 import { Thread } from './pages/Thread';
 
 import { Home } from './pages/Home';
-
+import { Create } from './pages/Create';
 import { SignUp } from './pages/SignUp';
 import { ScreenLayout } from './pages/ScreenLayout';
+import { Login } from './pages/Login';
 export const apiURL = import.meta.env.VITE_API_URL;
+
+export interface Thread {
+  title: string;
+  id: Number;
+  author: string;
+  content: string;
+  date: Date;
+  liked: number;
+}
 
 function App() {
   return (
@@ -14,10 +24,13 @@ function App() {
       <Routes>
         <Route path="/" element={<ScreenLayout></ScreenLayout>}>
           <Route path="" element={<Home></Home>}></Route>
-          <Route path="boards" element={<h1>boards</h1>}></Route>
+          <Route path="thread" element={<h1>thread</h1>}></Route>
           <Route path="user" element={<h1>user</h1>}></Route>
           <Route path="thread/:id" element={<Thread></Thread>}></Route>
+          <Route path="search" element={<h1>search</h1>}></Route>
+          <Route path="login" element={<Login></Login>}></Route>
           <Route path="signup" element={<SignUp></SignUp>}></Route>
+          <Route path="create" element={<Create></Create>}></Route>
         </Route>
       </Routes>
     </>

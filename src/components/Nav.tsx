@@ -1,4 +1,7 @@
 import { AiOutlineHome } from 'react-icons/ai';
+import { BiSearchAlt2 } from 'react-icons/bi';
+import { BiSolidSearchAlt2 } from 'react-icons/bi';
+
 import { AiFillHome } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import { BsChatLeftTextFill } from 'react-icons/bs';
@@ -9,10 +12,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from '../pages/ScreenLayout.module.css';
 export function Nav() {
   const location = useLocation();
+  const nav = location.pathname.split('/')[1];
   // 현재 주소값을 받아와 stlye을 변경
   const navigate = useNavigate();
   // 클릭 시 해당 페이지로 이동
-  const nav = location.pathname.split('/')[1];
 
   return (
     <IconContext.Provider value={{ size: '30px' }}>
@@ -31,14 +34,26 @@ export function Nav() {
         </div>
         <div
           onClick={() => {
-            navigate('/boards');
+            navigate('/thread');
           }}
-          className={styles.navButton + ' ' + styles.boardsContainer}
+          className={styles.navButton + ' ' + styles.threadContainer}
         >
-          {nav === 'boards' ? (
+          {nav === 'thread' ? (
             <BsChatLeftTextFill></BsChatLeftTextFill>
           ) : (
             <BsChatLeftText></BsChatLeftText>
+          )}
+        </div>
+        <div
+          onClick={() => {
+            navigate('/search');
+          }}
+          className={styles.navButton + ' ' + styles.searchContainer}
+        >
+          {nav === 'search' ? (
+            <BiSolidSearchAlt2></BiSolidSearchAlt2>
+          ) : (
+            <BiSearchAlt2></BiSearchAlt2>
           )}
         </div>
         <div

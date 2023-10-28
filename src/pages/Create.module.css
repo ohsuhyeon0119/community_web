@@ -1,0 +1,63 @@
+.createWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  width: 100%;
+}
+.createForm {
+  width: 600px;
+  min-height: 600px;
+}
+
+/* input css는 전역으로 설정됨 -> 추후에 리팩토링 */
+input,
+textarea {
+  -webkit-appearance: none;
+
+  -moz-appearance: none;
+
+  appearance: none;
+
+  width: 90%;
+
+  border: none;
+  margin: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+textarea {
+  font-size: 20px;
+  height: 500px;
+  font-weight: none;
+  resize: none;
+}
+input:focus,
+textarea:focus {
+  outline: none; /* 포커스된 상태일 때의 테두리 스타일을 없앰 */
+}
+
+.selectBox {
+  width: 300px;
+
+  height: 40px;
+  border: 2px solid rgb(182, 170, 170);
+}
+.selectBox > span {
+  float: right;
+  margin-right: 10px;
+}
+.selectItem {
+  margin-top: 12px;
+  margin-left: 15px;
+  border: 1px solid black;
+}
+.selectItem:hover {
+}
+
+.selectWrapper {
+}
+.selectList {
+  overflow-y: scroll;
+  border: 1px solid black;
+}

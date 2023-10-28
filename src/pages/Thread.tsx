@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiURL } from '../App';
+import type { Thread } from '../App';
 export function Thread() {
   const [inputTitle, setInputTitle] = useState<string>('');
   const [inputContent, setInputContent] = useState<string>('');
@@ -8,14 +9,7 @@ export function Thread() {
   const navi = useNavigate();
 
   const { id } = useParams();
-  const [threadData, setThreadData] = useState<{
-    title: string;
-    id: Number;
-    author: string;
-    content: string;
-    date: Date;
-    liked: number;
-  } | null>();
+  const [threadData, setThreadData] = useState<Thread | null>();
 
   useEffect(() => {
     fetch(apiURL + '/thread/' + id)
@@ -118,7 +112,7 @@ export function Thread() {
       </button>
       <button
         onClick={() => {
-          fetch(apiURL + 'thread/' + id, {
+          fetch(apiURL + '/thread/' + id, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json', // 요청 본문의 데이터 유형 지정 (JSON 사용 예시)
