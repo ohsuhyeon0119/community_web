@@ -10,24 +10,24 @@ interface StyledLoginBoxWrapperProps {
 
 const StyledLoginBoxWrapper = styled.div<StyledLoginBoxWrapperProps>`
   & {
-    height: 10em;
+    height: 10rem;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 1em;
+    padding: 1rem;
   }
   & .loginButton,
   & .signupButton {
-    width: 7em;
-    height: 2em;
-    margin: 0.5em;
+    width: 7rem;
+    height: 2rem;
+    margin: 0.5rem;
     font-weight: bold;
 
     cursor: pointer;
-    font-size: 1.2em;
-    border-radius: 0.5em;
+    font-size: 1.2rem;
+    border-radius: 0.5rem;
     transition: background-color 0.3s, transform 0.3s;
     display: flex;
     justify-content: center;

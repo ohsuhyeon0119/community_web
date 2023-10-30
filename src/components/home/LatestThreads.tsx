@@ -11,8 +11,8 @@ const StyledTheadListWrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
 
-    grid-gap: 2em;
-    padding: 0.7em;
+    grid-gap: 2rem;
+    padding: 0.7rem;
     width: 100%;
   }
   & .gridCell {
@@ -25,8 +25,8 @@ const StyledTheadListWrapper = styled.div`
     & .threadItemContainer {
       grid-template-columns: 1fr;
 
-      grid-gap: 1.5em;
-      padding: 0em;
+      grid-gap: 1.5rem;
+      padding: 0rem;
     }
   }
 `;

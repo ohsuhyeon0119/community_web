@@ -1,4 +1,3 @@
-import styles from '../pages/ScreenLayout.module.css';
 import styled from 'styled-components';
 
 const StyledFooterWrapper = styled.div`

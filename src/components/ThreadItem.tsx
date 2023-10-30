@@ -1,12 +1,11 @@
-import React from 'react';
 import { BiCommentDetail } from 'react-icons/bi';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillTag } from 'react-icons/ai';
 import { useInView } from 'react-intersection-observer';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { Thread } from '../App';
 import { useNavigate } from 'react-router-dom';
-import { apiURL } from '../App';
+
 import styled, { keyframes, css } from 'styled-components';
 interface ThreadItemProps {
   thread: Thread;
@@ -20,8 +19,8 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   & .threadItem {
     text-align: center;
     /* 반응형 고려해야 함 */
-    width: 18em;
-    height: 18em;
+    width: 18rem;
+    height: 18rem;
     display: grid;
     grid-template-columns: 3fr 2fr 2fr 2fr;
     grid-template-rows: 1fr 3fr 1fr 1fr; /* 3개의 행을 생성 */
@@ -33,13 +32,13 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
 
     /* 애니메이션  */
     transform: translateY(0rem);
-    box-shadow: 0.08em 0.08em 0.08em 0.08em rgba(78, 120, 97, 0.3);
+    box-shadow: 0.08rem 0.08rem 0.08rem 0.08rem rgba(78, 120, 97, 0.3);
     transition: box-shadow 0.5s, transform 1s, opacity 1s;
 
-    padding: 0.3em;
+    padding: 0.3rem;
     opacity: 0;
 
-    border: 1em solid ${(props) => props.boardColor};
+    border: 1rem solid ${(props) => props.boardColor};
   }
   /* 이미 보여진 경우 애니메이션은 따로 실행하지 않는다. */
 
@@ -62,11 +61,11 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   & .comment {
     grid-area: comment;
     text-align: right;
-    margin-right: 1em;
+    margin-right: 1rem;
   }
   & .content {
     grid-area: content;
-    font-size: 0.8em;
+    font-size: 0.8rem;
   }
   & .board {
     grid-area: board;
@@ -76,7 +75,7 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   }
 
   & .threadItem:hover {
-    box-shadow: 0.2em 0.2em 0.7em 0.2em rgba(78, 120, 97, 0.3);
+    box-shadow: 0.2rem 0.2rem 0.7rem 0.2rem rgba(78, 120, 97, 0.3);
     background-color: ${(props) => props.boardColor};
     transform: translateY(-2.5rem);
     color: white;
@@ -87,11 +86,11 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   }
 
   & h3 {
-    font-size: 2em;
+    font-size: 2rem;
     font-weight: bold;
   }
   & .ellipsis {
-    font-size: 0.8em;
+    font-size: 0.8rem;
     overflow: hidden;
     white-space: normal;
     text-overflow: ellipsis;
@@ -105,7 +104,7 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
     & .threadItem {
       width: 90vw;
 
-      height: 15em;
+      height: 15rem;
     }
   }
 `;

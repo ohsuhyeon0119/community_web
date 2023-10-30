@@ -7,16 +7,16 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 const StyledCreateButtonWrapper = styled.div`
   & .createButton {
-    width: 4em;
-    height: 4em;
+    width: 4rem;
+    height: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 2em;
+    border-radius: 2rem;
     background-color: red;
     position: fixed;
-    bottom: 3em;
-    right: 3em;
+    bottom: 3rem;
+    right: 3rem;
     background-color: rgba(240, 232, 232, 0.878);
     transform: scale(1);
     transition: background-color 0.3s, transform 0.3s;
@@ -24,6 +24,10 @@ const StyledCreateButtonWrapper = styled.div`
   & .createButton:hover {
     background-color: rgba(192, 192, 192, 0.7);
     transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -40,7 +44,7 @@ export function CreateButton() {
         <IconContext.Provider value={{ size: '30px' }}>
           <div
             onClick={() => {
-              navi('/create');
+              navi('/write');
             }}
             className={'createButton'}
           >

@@ -12,7 +12,9 @@ const StyledScreenLayoutWrapper = styled.div`
     width: 100%;
     height: 100%;
   }
-
+  & .headerLayout {
+    grid-area: header;
+  }
   & .navLayout {
     grid-area: nav;
   }
@@ -31,8 +33,8 @@ const StyledScreenLayoutWrapper = styled.div`
   @media (max-width: 768px) {
     & .screenLayout {
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 100px;
-      grid-template-areas: 'main' 'footer';
+      grid-template-rows: 3rem 1fr 3rem 3rem;
+      grid-template-areas: 'header' 'main' 'footer' 'nav';
     }
   }
 `;
@@ -41,8 +43,7 @@ export function ScreenLayout() {
   return (
     <StyledScreenLayoutWrapper>
       <div className={'screenLayout'}>
-        {/* 좌단의 Nav를 fix한다 */}
-        {/* Nav */}
+        <div className={'headerLayout'}></div>
         <div className={'navLayout'}></div>
         {/* main */}
         <div className={'mainLayout'}>
