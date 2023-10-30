@@ -18,31 +18,34 @@ interface StyledThreadItemWrapperProps {
 
 const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   & .threadItem {
+    text-align: center;
     /* 반응형 고려해야 함 */
-
+    width: 18em;
+    height: 18em;
     display: grid;
-    grid-template-columns: 60px 100px 100px 60px;
-    grid-template-rows: 40px 200px 40px; /* 3개의 행을 생성 */
+    grid-template-columns: 3fr 2fr 2fr 2fr;
+    grid-template-rows: 1fr 3fr 1fr 1fr; /* 3개의 행을 생성 */
     grid-template-areas:
-      'board title title title'
-      'board content content content'
-      'tag tag tag comment';
+      'title title title title'
+      'content content content content'
+      'tag tag tag tag'
+      'board comment comment comment';
 
     /* 애니메이션  */
     transform: translateY(0rem);
-    box-shadow: 1px 1px 3px 1px rgba(78, 120, 97, 0.3);
-    transition: box-shadow 0.5s, transform 0.5s, opacity 0.5s;
+    box-shadow: 0.08em 0.08em 0.08em 0.08em rgba(78, 120, 97, 0.3);
+    transition: box-shadow 0.5s, transform 1s, opacity 1s;
 
-    padding: 5px;
+    padding: 0.3em;
     opacity: 0;
 
-    border: 15px solid ${(props) => props.boardColor};
+    border: 1em solid ${(props) => props.boardColor};
   }
   /* 이미 보여진 경우 애니메이션은 따로 실행하지 않는다. */
 
   & .alreadyShown {
     opacity: 1;
-    transform: translateY(-1rem);
+    transform: translateY(-1.5rem);
   }
 
   & .threadItem > * {
@@ -53,15 +56,17 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   }
   & .tag {
     grid-area: tag;
+    text-align: center;
   }
 
   & .comment {
     grid-area: comment;
     text-align: right;
+    margin-right: 1em;
   }
   & .content {
     grid-area: content;
-    font-size: 13px;
+    font-size: 0.8em;
   }
   & .board {
     grid-area: board;
@@ -70,14 +75,11 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
     justify-content: center;
   }
 
-  & .threadItem + .threadItem {
-    margin-top: 35px;
-  }
-
   & .threadItem:hover {
-    box-shadow: 3px 3px 10px 2px rgba(78, 120, 97, 0.3);
+    box-shadow: 0.2em 0.2em 0.7em 0.2em rgba(78, 120, 97, 0.3);
     background-color: ${(props) => props.boardColor};
-    transform: translateY(-2rem);
+    transform: translateY(-2.5rem);
+    color: white;
   }
   & p {
     margin: 0;
@@ -85,13 +87,11 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   }
 
   & h3 {
-    font-size: 16px;
+    font-size: 2em;
     font-weight: bold;
-    margin: 0px;
-    padding: 0px;
   }
   & .ellipsis {
-    font-size: 12px;
+    font-size: 0.8em;
     overflow: hidden;
     white-space: normal;
     text-overflow: ellipsis;
@@ -99,6 +99,14 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     word-break: keep-all;
+  }
+
+  @media (max-width: 768px) {
+    & .threadItem {
+      width: 90vw;
+
+      height: 15em;
+    }
   }
 `;
 
@@ -132,7 +140,8 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
         className={`threadItem ${isShown && 'alreadyShown'}`} //이미 보여줬으면 효과를 또다시 나타낼 필요 없다.
       >
         <div className="board">
-          <AiFillTag></AiFillTag>시사
+          <AiFillTag></AiFillTag>
+          {thread.boardName}
         </div>
         <div className="title">
           <h3>{thread.title}</h3>

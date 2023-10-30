@@ -12,12 +12,12 @@ const StyledCreatePageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px;
+    padding: 2em;
     width: 100%;
   }
   & .createForm {
-    width: 600px;
-    min-height: 600px;
+    width: 20em;
+    min-height: 20em;
   }
 
   /* input css는 전역으로 설정됨 -> 추후에 리팩토링 */
@@ -32,13 +32,13 @@ const StyledCreatePageWrapper = styled.div`
     width: 90%;
 
     border: none;
-    margin: 20px;
-    font-size: 24px;
+    margin: 1em;
+    font-size: 1.8em;
     font-weight: bold;
   }
   & textarea {
-    font-size: 20px;
-    height: 500px;
+    font-size: 1.6em;
+    height: 30em;
     font-weight: none;
     resize: none;
   }
@@ -48,17 +48,17 @@ const StyledCreatePageWrapper = styled.div`
   }
 
   & .selectBox {
-    width: 300px;
+    width: 18em;
 
-    height: 40px;
-    border: 2px solid rgb(182, 170, 170);
+    height: 2em;
+    border: 0.1em solid rgb(182, 170, 170);
   }
   & .selectBox > .updownIcon {
     float: right;
-    margin-right: 10px;
+    margin-right: 0.8em;
   }
   & .selectItem {
-    border: 1px solid black;
+    border: 0.1em solid black;
   }
   & .selectItem:hover {
     background-color: rgb(182, 170, 170);
@@ -68,7 +68,7 @@ const StyledCreatePageWrapper = styled.div`
   }
   & .selectList {
     overflow-y: scroll;
-    border: 1px solid black;
+    border: 0.1em solid black;
   }
 `;
 
@@ -195,7 +195,7 @@ function SelectBox({
   }, []);
 
   return (
-    <IconContext.Provider value={{ size: '30px', color: 'gray' }}>
+    <IconContext.Provider value={{ size: '2em', color: 'gray' }}>
       <div className={'selectWrapper'}>
         <div
           onClick={() => {

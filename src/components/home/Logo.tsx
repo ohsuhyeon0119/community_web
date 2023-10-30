@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import styles from './../../pages/Home.module.css';
 
 interface StyledLogoProps {
   fadein: string | undefined;
@@ -8,9 +7,25 @@ interface StyledLogoProps {
 interface StyledSloganProps {
   fadein: string | undefined;
 }
+
+const StyledLogoWrapper = styled.div`
+  & .Logowrapper {
+    width: 90%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    text-align: center;
+  }
+`;
+
 const StyledSlogan = styled.p<StyledSloganProps>`
   opacity: 0;
-  font-size: 20px;
+  font-size: 2vw;
   color: black;
   animation: ${(props) =>
     props.fadein === 'fadein'
@@ -21,11 +36,11 @@ const StyledSlogan = styled.p<StyledSloganProps>`
   animation-delay: 0.8s;
 `;
 const StyledLogo = styled.span<StyledLogoProps>`
-  font-size: 100px;
+  font-size: 8vw;
   color: black;
   & > .letter {
     display: inline-block;
-    margin-right: 0.2em;
+    margin-right: 1rem;
     opacity: 0;
     animation: ${(props) =>
       props.fadein === 'fadein'
@@ -34,9 +49,30 @@ const StyledLogo = styled.span<StyledLogoProps>`
           `
         : 'none'};
   }
-  & > .letter_T {
-    font-size: 220px;
-    animation-delay: 0.4s;
+
+  @media (max-width: 768px) {
+    & {
+      font-size: 4rem;
+    }
+    & > .letter_T {
+      font-size: 6rem;
+    }
+  }
+  @media (max-width: 720px) {
+    & {
+      font-size: 3.5rem;
+    }
+    & > .letter_T {
+      font-size: 5.7rem;
+    }
+  }
+  @media (max-width: 680px) {
+    & {
+      font-size: 3.2rem;
+    }
+    & > .letter_T {
+      font-size: 4.8rem;
+    }
   }
 `;
 const fadein = keyframes`
@@ -72,19 +108,26 @@ export function Logo() {
   const logoLetters = ['G', 'E', 'T', 'W', 'O', 'R', 'L', 'D'];
 
   return (
-    <div className={styles.Logowrapper}>
-      {logoLetters.map((str, index) => {
-        return (
-          <StyledLogo key={index} fadein={islogofaded ? 'fadein' : undefined}>
-            <span className={`letter letter_${str}`}> {str}</span>
-          </StyledLogo>
-        );
-      })}
+    <StyledLogoWrapper>
+      <div className={'Logowrapper'}>
+        <div className={'title'}>
+          {logoLetters.map((str, index) => {
+            return (
+              <StyledLogo
+                key={index}
+                fadein={islogofaded ? 'fadein' : undefined}
+              >
+                <span className={`letter letter_${str}`}> {str}</span>
+              </StyledLogo>
+            );
+          })}
+        </div>
 
-      <StyledSlogan fadein={islogofaded ? 'fadein' : undefined}>
-        세상의 수많은 이야기를 공유해주세요, 당신의 의견을 적어주세요, 이
-        커뮤니티에.
-      </StyledSlogan>
-    </div>
+        <StyledSlogan fadein={islogofaded ? 'fadein' : undefined}>
+          세상의 수많은 이야기를 공유해주세요, 당신의 의견을 적어주세요, 이
+          커뮤니티에서.
+        </StyledSlogan>
+      </div>
+    </StyledLogoWrapper>
   );
 }

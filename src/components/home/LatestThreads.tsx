@@ -4,6 +4,32 @@ import styles from './../../pages/Home.module.css';
 import { apiURL } from '../../App';
 import type { Thread } from '../../App';
 import type { Board } from '../../App';
+import styled, { css } from 'styled-components';
+
+const StyledTheadListWrapper = styled.div`
+  & .threadItemContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
+
+    grid-gap: 2em;
+    padding: 0.7em;
+    width: 100%;
+  }
+  & .gridCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  // 768px 부터는 모바일 전용
+  @media (max-width: 768px) {
+    & .threadItemContainer {
+      grid-template-columns: 1fr;
+
+      grid-gap: 1.5em;
+      padding: 0em;
+    }
+  }
+`;
 
 export default function LatestThreads() {
   const [threads, setThreads] = useState<Thread[] | null>(null);
@@ -45,28 +71,30 @@ export default function LatestThreads() {
   }, []);
 
   return (
-    <>
-      <h1 style={{ textAlign: 'center', fontSize: '50px' }}>LATEST THREADS</h1>
+    <StyledTheadListWrapper>
+      <h1 style={{ textAlign: 'center', fontSize: '3em' }}>LATEST THREADS</h1>
       <p
-        style={{ textAlign: 'center', fontSize: '20px', marginBottom: '30px' }}
+        style={{ textAlign: 'center', fontSize: '1.5em', marginBottom: '4em' }}
       >
-        최근에 올라온 게시글입니다.
+        최근에 올라온 글들을 확인하세요!
       </p>
-      <div className={styles['home-threadItem-Container']}>
+      <div className={'threadItemContainer'}>
         {threads?.map((thread) => {
           const boardColor = boards?.filter((board) => {
             return board.boardName === thread.boardName;
           })[0].boardColor; // boards에서 thread의 boardName과 같은 board의 boardColor를 가져온다.
           console.log('boardColor: ', boardColor);
           return (
-            <ThreadItem
-              boardColor={boardColor}
-              key={thread.id as number}
-              thread={thread}
-            ></ThreadItem>
+            <div className={'gridCell'}>
+              <ThreadItem
+                boardColor={boardColor}
+                key={thread.id as number}
+                thread={thread}
+              ></ThreadItem>
+            </div>
           );
         })}
       </div>
-    </>
+    </StyledTheadListWrapper>
   );
 }

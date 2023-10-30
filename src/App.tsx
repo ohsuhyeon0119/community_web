@@ -1,12 +1,13 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import { Thread } from './pages/Thread';
-
+import { Nav } from './components/Nav';
 import { Home } from './pages/Home';
 import { Create } from './pages/Create';
 import { SignUp } from './pages/SignUp';
 import { ScreenLayout } from './pages/ScreenLayout';
 import { Login } from './pages/Login';
+import { CreateButton } from './components/CreateButton';
 export const apiURL = import.meta.env.VITE_API_URL;
 
 export interface Board {
@@ -28,6 +29,7 @@ export interface Thread {
 function App() {
   return (
     <>
+      <Nav></Nav>
       <Routes>
         <Route path="/" element={<ScreenLayout></ScreenLayout>}>
           <Route path="" element={<Home></Home>}></Route>
@@ -40,6 +42,7 @@ function App() {
           <Route path="create" element={<Create></Create>}></Route>
         </Route>
       </Routes>
+      <CreateButton></CreateButton>
     </>
   );
 }

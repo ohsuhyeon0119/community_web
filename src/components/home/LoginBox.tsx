@@ -1,39 +1,94 @@
-import styles from './../../pages/Home.module.css';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 // 로그인 페이지는 대문에서만 관리
 
 // 재사용 할 수 있도록 styled-component 사용
+interface StyledLoginBoxWrapperProps {
+  fadein?: string;
+}
 
-const StyledButton = styled.button`
-  width: 200px;
-  height: 50px;
-  backgroud-color: #000;
-  border-radius: 10px;
+const StyledLoginBoxWrapper = styled.div<StyledLoginBoxWrapperProps>`
+  & {
+    height: 10em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1em;
+  }
+  & .loginButton,
+  & .signupButton {
+    width: 7em;
+    height: 2em;
+    margin: 0.5em;
+    font-weight: bold;
+
+    cursor: pointer;
+    font-size: 1.2em;
+    border-radius: 0.5em;
+    transition: background-color 0.3s, transform 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .loginButton:hover,
+  & .signupButton:hover {
+    background-color: rgba(192, 192, 192, 0.7);
+    transform: scale(1.1);
+  }
+  opacity: 0;
+  transform: translateY(+50%);
+  animation: ${(props) =>
+    props.fadein === 'fadein'
+      ? css`
+          ${fadein} 1s ease-in-out forwards
+        `
+      : 'none'};
+  animation-delay: 0.8s;
 `;
+const fadein = keyframes`
+from {
+  
+}
+to {
+  opacity: 1;
+  transform: translateY(0);
+}`;
 
 export function LoginBox() {
+  const [islogofaded, setIsLogoFaded] = useState(false);
+  // logo fade in animation을 위한 state
+  //약간의 애니메이션 지연을 위하여
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLogoFaded(true);
+    }, 500);
+  }, []);
+
   const navi = useNavigate();
   return (
     <>
-      <div className={styles.LoginBox}>
+      <StyledLoginBoxWrapper fadein={islogofaded ? 'fadein' : undefined}>
         <div
           onClick={() => {
             navi('/login');
           }}
-          className={styles.loginButton}
+          className={'loginButton'}
         >
-          <span>LOGIN</span>
+          LOGIN
         </div>
         <div
           onClick={() => {
             navi('/signup'); // modal로 구현하기
           }}
-          className={styles.signupButton}
+          className={'signupButton'}
         >
-          <span>SIGN UP</span>
+          SIGNUP
         </div>
-      </div>
+      </StyledLoginBoxWrapper>
     </>
   );
 }
