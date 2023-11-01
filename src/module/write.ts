@@ -1,10 +1,16 @@
 const TITLE_CHANGE = 'TITLE_CHANGE';
-
+const CONTENT_CHANGE = 'CONTENT_CHANGE';
 // action creator
 export function ChangeTitle(title: string) {
   return {
     type: TITLE_CHANGE,
     payload: title,
+  };
+}
+export function ChangeContent(content: string) {
+  return {
+    type: CONTENT_CHANGE,
+    payload: content,
   };
 }
 
@@ -22,5 +28,7 @@ export default function writeReducer(
       return { ...state, title: action.payload };
     default:
       return state;
+    case CONTENT_CHANGE:
+      return { ...state, content: action.payload };
   }
 }

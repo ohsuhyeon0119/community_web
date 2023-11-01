@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { apiURL } from '../App';
 import styled from 'styled-components';
 import { AiOutlineDown } from 'react-icons/ai';
@@ -8,10 +8,21 @@ import type { Board } from '../App';
 import { AiOutlineUp } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../module';
-import { ChangeTitle } from '../module/write';
+import { ChangeTitle, ChangeContent } from '../module/write';
+import {
+  getThreadById,
+  postThread,
+  updateThreadById,
+  getBoards,
+} from '../api/index';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import React from 'react';
+import axios from 'axios';
+
 interface StyledCreatePageWrapperProps {
   boardclicked: 'boardclicked' | undefined;
   boxclicked: 'boxclicked' | undefined;
+  boardcolor: string;
 }
 // styled component에서  interface 나중에 다 이걸로 바꾸기
 
@@ -30,6 +41,8 @@ const StyledCreatePageWrapper = styled.div<StyledCreatePageWrapperProps>`
     width: 100%;
   }
   & .createForm {
+    border: 10px solid ${(props) => props.boardcolor || 'none'};
+    padding: 0.5rem;
     width: 37rem;
     margin-bottom: 5rem;
   }
@@ -127,22 +140,89 @@ const StyledCreatePageWrapper = styled.div<StyledCreatePageWrapperProps>`
 `;
 
 export function Write() {
-  const [inputContent, setInputContent] = useState<string>('');
-  const [createMode, setCreateMode] = useState(false);
-  const [isSelectboxClicked, setIsSelectboxClicked] = useState(false);
-  const [clickedBoard, setClickedBoard] = useState<string | null>(null); // 선택된 board
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // id를 받으면 해당 thread를 수정할 수 있도록 받아온다.
 
+  const { id } = useParams();
   const navi = useNavigate();
   const title = useSelector((state: RootState) => state.writeReducer.title);
+  const content = useSelector((state: RootState) => state.writeReducer.content);
+  const [isSelectboxClicked, setIsSelectboxClicked] = useState(false);
+  const [clickedBoard, setClickedBoard] = useState<string>(''); // 선택된 board
+  const [boardcolor, setBoardcolor] = useState<string>('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useDispatch();
+  const queryClient = useQueryClient(); // 캐싱에 대한 직접 접근 및 조작
+  const postThreadMutation = useMutation({
+    mutationFn: (data) => {
+      return axios.post(`${apiURL}/thread`, data).then((res) => res.data);
+    },
+    onSuccess: (data) => {
+      navi('/thread/' + data.id);
+    },
+  });
+  const updateThreadMutation = useMutation({
+    mutationFn: (data) => {
+      return axios.put(`${apiURL}/thread/${id}`, data).then((res) => res.data);
+    },
+    onSuccess: () => {
+      navi('/thread/' + id);
+      queryClient.removeQueries({ queryKey: ['thread', Number(id)] });
+      // 수정 후에는 수정 전 데이터를 삭제해 준다.
+    },
+  });
+
+  const boardsQuery = useQuery({
+    queryKey: ['boards'],
+    queryFn: getBoards,
+  });
+  const ThreadQuery = useQuery({
+    queryKey: ['thread', Number(id)],
+    queryFn: () => {
+      return getThreadById(Number(id));
+    },
+    enabled: !!id,
+  });
+
+  const boards = boardsQuery.data;
+  const thread = ThreadQuery?.data;
+  console.log('thread: ', thread);
+  console.log('boards: ', boards);
 
   const OnChangeTitle = (title: string) => {
     dispatch(ChangeTitle(title));
   };
+  const onChangeContent = (content: string) => {
+    dispatch(ChangeContent(content));
+  };
 
+  useEffect(() => {
+    if (!!id && !!thread && !!boards) {
+      const clickedBoardColor = boards?.filter((boardItem) => {
+        return boardItem.boardName === thread?.boardName;
+      })[0].boardColor;
+      setBoardcolor(clickedBoardColor || '');
+      // POST할 데이터 객체
+      console.log('clickedboardcolor : ', clickedBoardColor);
+      setClickedBoard(thread?.boardName);
+      // 선택한 board의 색깔을 검색
+
+      OnChangeTitle(thread?.title || '');
+      onChangeContent(thread?.content || '');
+    }
+  }, [thread, boards]);
+  // react-query에서 값을 다 받아오면 진행한다.
+
+  useEffect(() => {
+    inputRef.current?.focus();
+    return () => {
+      OnChangeTitle('');
+      onChangeContent('');
+    };
+  }, []);
   return (
     <StyledCreatePageWrapper
+      boardcolor={boardcolor}
       boardclicked={clickedBoard ? 'boardclicked' : undefined}
       boxclicked={isSelectboxClicked ? 'boxclicked' : undefined}
     >
@@ -160,10 +240,13 @@ export function Write() {
               setIsSelectboxClicked,
               clickedBoard,
               setClickedBoard,
+              boards,
+              setBoardcolor,
             }}
           ></SelectBox>
           <hr />
           <input
+            ref={inputRef}
             placeholder="제목을 입력해주세요."
             value={title}
             onChange={(e) => {
@@ -177,13 +260,13 @@ export function Write() {
             placeholder="내용을 입력해주세요."
             cols={20}
             rows={1}
-            value={inputContent}
+            value={content}
             onChange={(e) => {
               textareaRef.current!.style.height = 'auto';
               textareaRef.current!.style.height =
                 textareaRef.current!.scrollHeight + 'px';
               // 스크롤 크기 만큼 높이를 늘려주는 로직
-              setInputContent(e.target.value);
+              onChangeContent(e.target.value);
             }}
           />{' '}
           <div className="buttonBox">
@@ -198,46 +281,22 @@ export function Write() {
             <button
               className="submitButton"
               onClick={() => {
-                // POST할 데이터 객체
-
-                const postData = {
+                const data = {
                   title: title,
-                  content: inputContent,
-                  author: 'suhyeon',
-
+                  content: content,
                   boardName: clickedBoard,
-                  // author은 suhyeon으로 임시 설정
+                  author: 'suhyeon',
+                  id: Number(id) as number,
                 };
 
-                if (!!title && !!inputContent && !!clickedBoard) {
-                  // fetch를 사용하여 POST 요청 보내기
-                  fetch(apiURL + '/thread', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json', // JSON 데이터를 보내므로 헤더 설정
-                    },
-                    body: JSON.stringify(postData), // POST 요청 본문에 JSON 데이터 전송
-                  })
-                    .then((response) => {
-                      if (!response.ok) {
-                        throw new Error('network error');
-                      }
-                      return response.json(); // 서버에서의 응답을 JSON 형식으로 파싱
-                    })
-                    .then((data) => {
-                      console.log('POST request completed: ', data);
-
-                      navi('/thread/' + data.id.toString());
-                    })
-                    .catch((error) => {
-                      console.error('POST request failed: ', error);
-                    });
+                if (!!id) {
+                  updateThreadMutation.mutate(data);
                 } else {
-                  alert('제목, 내용, 게시판을 모두 입력해주세요.');
+                  postThreadMutation.mutate(data);
                 }
               }}
             >
-              등록
+              {!!id ? '수정' : '등록'}
             </button>
           </div>
         </form>
@@ -245,11 +304,14 @@ export function Write() {
     </StyledCreatePageWrapper>
   );
 }
+
 interface SelectBoxProps {
   isSelectboxClicked: boolean;
   setIsSelectboxClicked: (value: boolean) => void;
   clickedBoard: string | null;
   setClickedBoard: (value: string) => void;
+  boards: Board[] | null;
+  setBoardcolor: (value: string) => void;
 }
 
 function SelectBox({
@@ -257,26 +319,10 @@ function SelectBox({
   setIsSelectboxClicked,
   clickedBoard,
   setClickedBoard,
+  boards,
+  setBoardcolor,
 }: SelectBoxProps) {
   //똑같은 api가 latesthread에도 있음. 이거는 나중에 고치기
-
-  const [boards, setBoards] = useState<Board[] | null>(null);
-  useEffect(() => {
-    fetch(apiURL + `/boards`)
-      .then((response) => {
-        // HTTP 응답을 JSON으로 파싱
-        return response.json();
-      })
-      .then((data) => {
-        // 성공적으로 데이터를 가져온 경우 실행될 코드
-        console.log('boards get request completed: ', data);
-        setBoards(data);
-      })
-      .catch((error) => {
-        // 오류 처리
-        console.error('데이터 가져오기 실패:', error);
-      });
-  }, []);
 
   useEffect(() => {
     window.addEventListener('click', () => {
@@ -302,7 +348,7 @@ function SelectBox({
             className={'selectBox'}
           >
             <span>
-              {clickedBoard !== null ? clickedBoard : '게시판을 선택해 주세요.'}{' '}
+              {!!clickedBoard ? clickedBoard : '게시판을 선택해 주세요.'}{' '}
             </span>
             <span className="updownIcon">
               {isSelectboxClicked ? (
@@ -318,7 +364,14 @@ function SelectBox({
                 return (
                   <div
                     onClick={() => {
+                      const clickedBoardColor = boards?.filter((boardItem) => {
+                        return boardItem.boardName === board.boardName;
+                      })[0].boardColor;
+                      setBoardcolor(clickedBoardColor || '');
+                      // POST할 데이터 객체
+                      console.log('clickedboardcolor : ', clickedBoardColor);
                       setClickedBoard(board.boardName);
+                      // 선택한 board의 색깔을 검색
                     }}
                     key={i}
                     className={'selectItem'}

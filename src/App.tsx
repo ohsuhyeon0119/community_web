@@ -42,7 +42,7 @@ function App() {
           <Route path="search" element={<h1>search</h1>}></Route>
           <Route path="login" element={<Login></Login>}></Route>
           <Route path="signup" element={<SignUp></SignUp>}></Route>
-          <Route path="write" element={<Write></Write>}></Route>
+          <Route path="write/:id?" element={<Write></Write>}></Route>
         </Route>
       </Routes>
       <CreateButton></CreateButton>

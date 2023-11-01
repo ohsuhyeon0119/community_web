@@ -4,8 +4,10 @@ import styles from './../../pages/Home.module.css';
 import { apiURL } from '../../App';
 import type { Thread } from '../../App';
 import type { Board } from '../../App';
+import { getThreadList, getBoards } from '../../api/index';
 import styled, { css } from 'styled-components';
-
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 const StyledTheadListWrapper = styled.div`
   & .threadItemContainer {
     display: grid;
@@ -32,43 +34,15 @@ const StyledTheadListWrapper = styled.div`
 `;
 
 export default function LatestThreads() {
-  const [threads, setThreads] = useState<Thread[] | null>(null);
-  const [boards, setBoards] = useState<Board[] | null>(null);
-  //네트워크 연결이 끝났을 때의 분기 처리도 하기 (렌더링이 달라야 한다.)
-  useEffect(() => {
-    fetch(apiURL + '/threadlist')
-      .then((response) => {
-        // HTTP 응답을 JSON으로 파싱
-        return response.json();
-      })
-      .then((data) => {
-        // 성공적으로 데이터를 가져온 경우 실행될 코드
-        console.log('threads get request completed: ', data);
+  const threadListQuery = useQuery({
+    queryKey: ['threadlist'],
+    queryFn: getThreadList,
+  });
 
-        setThreads(data);
-      })
-      .catch((error) => {
-        // 오류 처리
-        console.error('데이터 가져오기 실패:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetch(apiURL + `/boards`)
-      .then((response) => {
-        // HTTP 응답을 JSON으로 파싱
-        return response.json();
-      })
-      .then((data) => {
-        // 성공적으로 데이터를 가져온 경우 실행될 코드
-        console.log('boards get request completed: ', data);
-        setBoards(data);
-      })
-      .catch((error) => {
-        // 오류 처리
-        console.error('데이터 가져오기 실패:', error);
-      });
-  }, []);
+  const boardsQuery = useQuery({
+    queryKey: ['boards'],
+    queryFn: getBoards,
+  });
 
   return (
     <StyledTheadListWrapper>
@@ -78,23 +52,25 @@ export default function LatestThreads() {
       >
         최근에 올라온 글들을 확인하세요!
       </p>
-      <div className={'threadItemContainer'}>
-        {threads?.map((thread) => {
-          const boardColor = boards?.filter((board) => {
-            return board.boardName === thread.boardName;
-          })[0].boardColor; // boards에서 thread의 boardName과 같은 board의 boardColor를 가져온다.
-          console.log('boardColor: ', boardColor);
-          return (
-            <div className={'gridCell'}>
-              <ThreadItem
-                boardColor={boardColor}
-                key={thread.id as number}
-                thread={thread}
-              ></ThreadItem>
-            </div>
-          );
-        })}
-      </div>
+      {!!threadListQuery.data && !!boardsQuery && (
+        <div className={'threadItemContainer'}>
+          {threadListQuery.data?.map((thread) => {
+            const boardColor = boardsQuery.data?.filter((board) => {
+              return board.boardName === thread.boardName;
+            })[0].boardColor; // boards에서 thread의 boardName과 같은 board의 boardColor를 가져온다.
+            console.log('boardColor: ', boardColor);
+            return (
+              <div className={'gridCell'}>
+                <ThreadItem
+                  boardColor={boardColor}
+                  key={thread.id as number}
+                  thread={thread}
+                ></ThreadItem>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </StyledTheadListWrapper>
   );
 }
