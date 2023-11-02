@@ -1,16 +1,18 @@
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { BiSolidSearchAlt2 } from 'react-icons/bi';
-
+import { IoIosCreate } from 'react-icons/io';
+import { IoCreateOutline } from 'react-icons/io5';
 import { AiFillHome } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
-import { BsChatLeftTextFill } from 'react-icons/bs';
+import { BsChatLeftTextFill, BsFillChatLeftTextFill } from 'react-icons/bs';
 import { BsChatLeftText } from 'react-icons/bs';
 import { BiUser } from 'react-icons/bi';
 import { BiSolidUser } from 'react-icons/bi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../module';
 const StyledNavWrapper = styled.div`
   & .Nav {
     display: flex;
@@ -44,6 +46,9 @@ const StyledNavWrapper = styled.div`
     background-color: rgba(192, 192, 192, 0.7);
     transform: scale(1.1);
   }
+  .writeContainer {
+    display: none;
+  }
   @media (max-width: 768px) {
     & .Nav {
       flex-direction: row;
@@ -59,6 +64,9 @@ const StyledNavWrapper = styled.div`
       width: 2rem;
       height: 2rem;
     }
+    .writeContainer {
+      display: flex;
+    }
   }
 `;
 
@@ -68,7 +76,9 @@ export function Nav() {
   // 현재 주소값을 받아와 stlye을 변경
   const navigate = useNavigate();
   // 클릭 시 해당 페이지로 이동
-
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.loginStateReducer.isLoggedIn
+  );
   return (
     <StyledNavWrapper>
       <IconContext.Provider value={{ size: '1.3em' }}>
@@ -91,8 +101,8 @@ export function Nav() {
             }}
             className={'navButton threadContainer'}
           >
-            {nav === 'thread' ? (
-              <BsChatLeftTextFill></BsChatLeftTextFill>
+            {nav === 'boards' ? (
+              <BsFillChatLeftTextFill></BsFillChatLeftTextFill>
             ) : (
               <BsChatLeftText></BsChatLeftText>
             )}
@@ -111,7 +121,19 @@ export function Nav() {
           </div>
           <div
             onClick={() => {
-              navigate('/user');
+              isLoggedIn ? navigate('/write') : navigate('/login');
+            }}
+            className={'navButton writeContainer'}
+          >
+            {nav === 'write' ? (
+              <IoIosCreate></IoIosCreate>
+            ) : (
+              <IoCreateOutline></IoCreateOutline>
+            )}
+          </div>
+          <div
+            onClick={() => {
+              isLoggedIn ? navigate('/user') : navigate('/login');
             }}
             className={'navButton userContainer'}
           >

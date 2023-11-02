@@ -28,6 +28,14 @@ const StyledBoardsWrapper = styled.div<StyledBoardsWrapperProps>`
     text-decoration: none;
     color: black;
   }
+  h1 {
+    text-align: center;
+  }
+  .slide {
+    position: relative;
+
+    z-index: 100;
+  }
 
   @media (max-width: 768px) {
     & .Boards {
@@ -102,7 +110,7 @@ export default function Boards() {
 
   return (
     <StyledBoardsWrapper carouselindex={carouselIndex}>
-      <h1>게시판</h1>
+      <h1>B O A R D S</h1>
 
       <div className={'Boards'}>
         <button
@@ -133,7 +141,7 @@ export default function Boards() {
                 <StyledNavLinkWrapper boardcolor={board.boardColor as string}>
                   <NavLink
                     style={{ textDecoration: 'none' }}
-                    to={`${board.boardName}}`}
+                    to={`${board.boardName}`}
                     className={({ isActive }) =>
                       isActive ? 'active slide' : 'slide'
                     }

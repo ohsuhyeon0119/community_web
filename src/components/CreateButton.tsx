@@ -1,6 +1,7 @@
 import { IoIosCreate } from 'react-icons/io';
-import { IconContext } from 'react-icons';
 import { IoCreateOutline } from 'react-icons/io5';
+import { IconContext } from 'react-icons';
+
 import styled from 'styled-components';
 
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -40,7 +41,7 @@ export function CreateButton() {
   return (
     <StyledCreateButtonWrapper>
       {/* 특정 페이지에서만 보여지게, 나중에는 로그인에 대한 조건부*/}
-      {nav === '' || nav === 'thread' ? (
+      {nav === '' || nav === 'boards' || nav === 'search' ? (
         <IconContext.Provider value={{ size: '30px' }}>
           <div
             onClick={() => {
