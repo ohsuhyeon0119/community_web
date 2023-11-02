@@ -87,7 +87,7 @@ export function Nav() {
           </div>
           <div
             onClick={() => {
-              navigate('/thread');
+              navigate('/boards/all');
             }}
             className={'navButton threadContainer'}
           >

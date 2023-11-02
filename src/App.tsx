@@ -8,8 +8,13 @@ import { SignUp } from './pages/SignUp';
 import { ScreenLayout } from './pages/ScreenLayout';
 import { Login } from './pages/Login';
 import { CreateButton } from './components/CreateButton';
+import { useSelector, useDispatch } from 'react-redux';
+import { init, setLogin, setLogout } from './module/loginstate';
+import { RootState } from './module';
+import ThreadsBox from './components/boards/ThreadsBox';
+import Boards from './pages/Boards';
 import Header from './components/Header';
-
+import { useEffect } from 'react';
 export const apiURL = import.meta.env.VITE_API_URL;
 
 export interface Board {
@@ -29,6 +34,25 @@ export interface Thread {
 }
 
 function App() {
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.loginStateReducer.isLoggedIn
+  );
+  const token = useSelector(
+    (state: RootState) => state.loginStateReducer.token
+  );
+  const dispatch = useDispatch();
+  function onInit() {
+    dispatch(init());
+  }
+  function onLogin(token: string) {
+    dispatch(setLogin(token));
+  }
+  function onLogout() {
+    dispatch(setLogout());
+  }
+  useEffect(() => {
+    onInit();
+  }, []);
   return (
     <>
       <Header></Header>
@@ -36,8 +60,14 @@ function App() {
       <Routes>
         <Route path="/" element={<ScreenLayout></ScreenLayout>}>
           <Route path="" element={<Home></Home>}></Route>
-          <Route path="thread" element={<h1>thread</h1>}></Route>
+
           <Route path="user" element={<h1>user</h1>}></Route>
+          <Route path="boards" element={<Boards></Boards>}>
+            <Route
+              path=":boardName"
+              element={<ThreadsBox></ThreadsBox>}
+            ></Route>
+          </Route>
           <Route path="thread/:id" element={<Thread></Thread>}></Route>
           <Route path="search" element={<h1>search</h1>}></Route>
           <Route path="login" element={<Login></Login>}></Route>

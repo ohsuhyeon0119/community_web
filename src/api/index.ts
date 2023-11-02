@@ -2,7 +2,7 @@ import axios from 'axios';
 import { apiURL } from '../App';
 
 export function getThreadList() {
-  return axios.get(apiURL + '/threadlist').then((res) => res.data);
+  return axios.get(apiURL + '/board/all').then((res) => res.data);
 }
 export function getBoards() {
   return axios.get(apiURL + '/boards').then((res) => res.data);

@@ -9,12 +9,7 @@ import { AiOutlineUp } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../module';
 import { ChangeTitle, ChangeContent } from '../module/write';
-import {
-  getThreadById,
-  postThread,
-  updateThreadById,
-  getBoards,
-} from '../api/index';
+import { getThreadById, getBoards } from '../api/index';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import axios from 'axios';

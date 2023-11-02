@@ -35,7 +35,7 @@ const StyledTheadListWrapper = styled.div`
 
 export default function LatestThreads() {
   const threadListQuery = useQuery({
-    queryKey: ['threadlist'],
+    queryKey: ['board', 'all'],
     queryFn: getThreadList,
   });
 
