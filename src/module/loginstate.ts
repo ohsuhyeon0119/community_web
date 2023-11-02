@@ -46,7 +46,7 @@ function getToken() {
     localStorage.removeItem(token);
     return null;
   }
-  return token;
+  return item.value; //전역으로 관리하는 token은 string이어야 한다.
 }
 
 // 로그인된 경우의 user 정보는, 리액트 쿼리에서 따로 관리할 것이다.
@@ -65,6 +65,7 @@ export default function loginStateReducer(
     case INIT:
       // 초기화 또는 TOKEN값을 갖고 올때 항상 초기화 해야 한다(스토리지 만료 여부 확인 위해서)
       const token = getToken();
+
       if (token !== null) {
         return { isLoggedIn: true, token: token };
       } else {

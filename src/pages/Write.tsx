@@ -147,6 +147,17 @@ export function Write() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useDispatch();
+
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.loginStateReducer.isLoggedIn
+  );
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navi('/login');
+    }
+  }, []);
+
   const queryClient = useQueryClient(); // 캐싱에 대한 직접 접근 및 조작
   const postThreadMutation = useMutation({
     mutationFn: (data) => {

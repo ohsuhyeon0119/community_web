@@ -15,6 +15,7 @@ import ThreadsBox from './components/boards/ThreadsBox';
 import Boards from './pages/Boards';
 import Header from './components/Header';
 import { useEffect } from 'react';
+import User from './pages/User';
 export const apiURL = import.meta.env.VITE_API_URL;
 
 export interface Board {
@@ -61,7 +62,7 @@ function App() {
         <Route path="/" element={<ScreenLayout></ScreenLayout>}>
           <Route path="" element={<Home></Home>}></Route>
 
-          <Route path="user" element={<h1>user</h1>}></Route>
+          <Route path="user" element={<User></User>}></Route>
           <Route path="boards" element={<Boards></Boards>}>
             <Route
               path=":boardName"

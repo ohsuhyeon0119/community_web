@@ -5,9 +5,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { init, setLogin, setLogout } from './../module/loginstate';
 import { RootState } from './../module';
+import { useNavigate } from 'react-router-dom';
 
 export function Login() {
-  const [username, setUsername] = useState('');
+  const navi = useNavigate();
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const isLoggedIn = useSelector(
     (state: RootState) => state.loginStateReducer.isLoggedIn
@@ -32,20 +34,26 @@ export function Login() {
       return axios.post(`${apiURL}/login`, data).then((res) => res.data);
     },
     onSuccess: (data) => {
-      onLogin(data.token);
+      if (!data.token) {
+        alert(data.message);
+      } else {
+        console.log('login success', data.token);
+        onLogin(data.token);
+        location.href = '/';
+      }
     },
   });
 
   return (
     <div>
       <h1>로그인</h1>
-      <label htmlFor="username">사용자 아이디</label>
+      <label htmlFor="id">사용자 아이디</label>
       <input
-        id="username"
+        id="id"
         type="text"
-        value={username}
+        value={id}
         onChange={(e) => {
-          setUsername(e.target.value);
+          setId(e.target.value);
         }}
       />
       <label htmlFor="password">비밀번호</label>
@@ -60,14 +68,13 @@ export function Login() {
 
       <button
         onClick={() => {
-          const data = { username, password };
+          const data = { id, password };
 
           loginMutation.mutate(data);
         }}
       >
         로그인 버튼
       </button>
-      {isLoggedIn ? '로그인되었음' : '로그인 안됨'}
     </div>
   );
 }
