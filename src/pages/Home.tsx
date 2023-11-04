@@ -7,8 +7,8 @@ export function Home() {
   return (
     <>
       <div className={'logoAndLoginWrapper'}>
-        <Logo></Logo>
-        <LoginBox></LoginBox>
+        {/* <Logo></Logo> */}
+        {/* <LoginBox></LoginBox> */}
       </div>
       <Explanation></Explanation>
       <LatestThreads></LatestThreads>

@@ -16,6 +16,7 @@ import Boards from './pages/Boards';
 import Header from './components/Header';
 import { useEffect } from 'react';
 import User from './pages/User';
+import LoginAlert from './components/LoginAlert';
 export const apiURL = import.meta.env.VITE_API_URL;
 
 export interface Board {
@@ -35,6 +36,9 @@ export interface Thread {
 }
 
 function App() {
+  const alertModal_isvisible = useSelector(
+    (state: RootState) => state.loginStateReducer.alertModal_isvisible
+  );
   const isLoggedIn = useSelector(
     (state: RootState) => state.loginStateReducer.isLoggedIn
   );
@@ -56,6 +60,7 @@ function App() {
   }, []);
   return (
     <>
+      {alertModal_isvisible && <LoginAlert></LoginAlert>}
       <Header></Header>
       <Nav></Nav>
       <Routes>

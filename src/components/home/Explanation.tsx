@@ -8,9 +8,9 @@ interface ExplanationWrapperProps {
 
 const ExplanationWrapper = styled.div<ExplanationWrapperProps>`
   & {
-    margin-top: 7rem;
+    margin-top: 0rem;
     padding: 3rem 2rem 3rem 2rem;
-    border-top: 0.1rem solid rgb(222, 222, 222);
+    border-top: '';
     border-bottom: 0.1rem solid rgb(222, 222, 222);
 
     line-height: 3rem;

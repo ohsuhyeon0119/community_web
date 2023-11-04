@@ -1,7 +1,10 @@
 import { IoIosCreate } from 'react-icons/io';
 import { IoCreateOutline } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-
+import { setAlert } from '../module/loginstate';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../module';
+import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -33,11 +36,20 @@ const StyledCreateButtonWrapper = styled.div`
 `;
 
 export function CreateButton() {
+  const dispatch = useDispatch();
+  const navi = useNavigate();
+  // 클릭 시 해당 페이지로 이동
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.loginStateReducer.isLoggedIn
+  );
+  function onSetAlert() {
+    dispatch(setAlert());
+  }
+
   const location = useLocation();
   const nav = location.pathname.split('/')[1];
   // 버튼의 display 가 선택적으로 none;
 
-  const navi = useNavigate();
   return (
     <StyledCreateButtonWrapper>
       {/* 특정 페이지에서만 보여지게, 나중에는 로그인에 대한 조건부*/}
@@ -45,7 +57,11 @@ export function CreateButton() {
         <IconContext.Provider value={{ size: '30px' }}>
           <div
             onClick={() => {
-              navi('/write');
+              if (isLoggedIn) {
+                navi('/write');
+              } else {
+                onSetAlert();
+              }
             }}
             className={'createButton'}
           >

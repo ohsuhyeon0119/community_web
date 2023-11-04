@@ -20,8 +20,6 @@ const StyledScreenLayoutWrapper = styled.div`
   }
   & .mainLayout {
     grid-area: main;
-    padding-left: 10px;
-    padding-right: 10px;
   }
 
   & .footerLayout {

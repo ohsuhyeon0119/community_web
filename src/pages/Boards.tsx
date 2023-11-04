@@ -24,12 +24,16 @@ const StyledBoardsWrapper = styled.div<StyledBoardsWrapperProps>`
     height: 4rem;
     width: 100%;
     text-align: center;
-    border-bottom: 1.3px solid rgb(222, 222, 222);
+    border-bottom: 1.3px solid rgb(222, 202, 222);
     text-decoration: none;
     color: black;
   }
-  h1 {
+  & > h1 {
+    margin: 0px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     text-align: center;
+    background-color: rgb(222, 222, 222);
   }
   .slide {
     position: relative;

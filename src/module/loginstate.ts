@@ -1,8 +1,19 @@
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const INIT = 'INIT'; // 새로고침 시, 로컬 스토리지에 값이 있는지를 확인한다.
-
+const ALERT = 'ALERT';
+const ALERT_CLOSE = 'ALERT_CLOSE';
 // action creator
+export function setAlertClose() {
+  return {
+    type: ALERT_CLOSE,
+  };
+}
+export function setAlert() {
+  return {
+    type: ALERT,
+  };
+}
 export function setLogin(token: string) {
   return {
     type: LOGIN,
@@ -20,11 +31,19 @@ export function init() {
   };
 }
 
-type State = { isLoggedIn: boolean; token: string | null };
+type State = {
+  isLoggedIn: boolean;
+  token: string | null;
+  alertModal_isvisible: boolean;
+};
 
 type Action = ReturnType<typeof setLogin>;
 
-const initialState = { isLoggedIn: false, token: null };
+const initialState = {
+  isLoggedIn: false,
+  token: null,
+  alertModal_isvisible: false,
+};
 
 function setTokenWithExpiry(token: string) {
   const now = new Date();
@@ -57,21 +76,28 @@ export default function loginStateReducer(
   switch (action.type) {
     case LOGIN:
       setTokenWithExpiry(action.payload);
-      return { isLoggedIn: true, token: action.payload };
+      return {
+        isLoggedIn: true,
+        token: action.payload,
+        alertModal_isvisible: false,
+      };
 
     case LOGOUT:
       localStorage.removeItem('token');
-      return { isLoggedIn: false, token: null };
+      return { isLoggedIn: false, token: null, alertModal_isvisible: false };
     case INIT:
       // 초기화 또는 TOKEN값을 갖고 올때 항상 초기화 해야 한다(스토리지 만료 여부 확인 위해서)
       const token = getToken();
 
       if (token !== null) {
-        return { isLoggedIn: true, token: token };
+        return { isLoggedIn: true, token: token, alertModal_isvisible: false };
       } else {
-        return { isLoggedIn: false, token: null };
+        return { isLoggedIn: false, token: null, alertModal_isvisible: false };
       }
-
+    case ALERT:
+      return { ...state, alertModal_isvisible: true };
+    case ALERT_CLOSE:
+      return { ...state, alertModal_isvisible: false };
     default:
       return state;
   }

@@ -1,8 +1,7 @@
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiSearchAlt2 } from 'react-icons/bi';
 import { BiSolidSearchAlt2 } from 'react-icons/bi';
-import { IoIosCreate } from 'react-icons/io';
-import { IoCreateOutline } from 'react-icons/io5';
+
 import { AiFillHome } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import { BsChatLeftTextFill, BsFillChatLeftTextFill } from 'react-icons/bs';
@@ -11,8 +10,9 @@ import { BiUser } from 'react-icons/bi';
 import { BiSolidUser } from 'react-icons/bi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../module';
+import { setAlert } from '../module/loginstate';
 const StyledNavWrapper = styled.div`
   & .Nav {
     display: flex;
@@ -37,10 +37,11 @@ const StyledNavWrapper = styled.div`
     border-radius: 20px;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     background-color: white;
     transform: scale(1);
-    transition: background-color 0.3s, transform 0.3s;
+    transition: transform 0.3s;
   }
   & .navButton:hover {
     background-color: rgba(192, 192, 192, 0.7);
@@ -49,13 +50,17 @@ const StyledNavWrapper = styled.div`
   .writeContainer {
     display: none;
   }
+  span {
+    margin-top: 0rem;
+    font-size: 0.8rem;
+  }
   @media (max-width: 768px) {
     & .Nav {
       flex-direction: row;
       top: auto;
       bottom: 0px;
       position: fixed;
-      height: 3rem;
+      height: 3.3rem;
       border-top: 1.2px solid rgb(222, 222, 222);
       width: 100vw;
       justify-content: space-around;
@@ -64,9 +69,16 @@ const StyledNavWrapper = styled.div`
       width: 2rem;
       height: 2rem;
     }
+    & .navButton:hover {
+      background-color: white;
+      transform: scale(1.2);
+    }
     .writeContainer {
       display: flex;
     }
+  }
+  .bold {
+    font-weight: bold;
   }
 `;
 
@@ -79,6 +91,12 @@ export function Nav() {
   const isLoggedIn = useSelector(
     (state: RootState) => state.loginStateReducer.isLoggedIn
   );
+
+  const dispatch = useDispatch();
+  function onSetAlert() {
+    dispatch(setAlert());
+  }
+
   return (
     <StyledNavWrapper>
       <IconContext.Provider value={{ size: '1.3em' }}>
@@ -94,6 +112,8 @@ export function Nav() {
             ) : (
               <AiOutlineHome></AiOutlineHome>
             )}
+
+            <span className={nav === '' ? 'bold' : ''}> HOME</span>
           </div>
           <div
             onClick={() => {
@@ -106,6 +126,7 @@ export function Nav() {
             ) : (
               <BsChatLeftText></BsChatLeftText>
             )}
+            <span className={nav === 'boards' ? 'bold' : ''}>REVIEWS</span>
           </div>
           <div
             onClick={() => {
@@ -118,26 +139,21 @@ export function Nav() {
             ) : (
               <BiSearchAlt2></BiSearchAlt2>
             )}
+            <span className={nav === 'search' ? 'bold' : ''}>SEARCH</span>
           </div>
+
           <div
             onClick={() => {
-              isLoggedIn ? navigate('/write') : navigate('/login');
-            }}
-            className={'navButton writeContainer'}
-          >
-            {nav === 'write' ? (
-              <IoIosCreate></IoIosCreate>
-            ) : (
-              <IoCreateOutline></IoCreateOutline>
-            )}
-          </div>
-          <div
-            onClick={() => {
-              isLoggedIn ? navigate('/user') : navigate('/login');
+              if (isLoggedIn) {
+                navigate('/user');
+              } else {
+                onSetAlert();
+              }
             }}
             className={'navButton userContainer'}
           >
             {nav === 'user' ? <BiSolidUser></BiSolidUser> : <BiUser></BiUser>}
+            <span className={nav === 'user' ? 'bold' : ''}>USER</span>
           </div>
         </div>
       </IconContext.Provider>
