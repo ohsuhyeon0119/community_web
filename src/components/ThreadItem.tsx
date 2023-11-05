@@ -25,7 +25,7 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
 
     display: grid;
 
-    grid-template-rows: 8rem 1.5rem 5rem 1.5rem 1.5rem; /* 3개의 행을 생성 */
+    grid-template-rows: 10rem 1.5rem 5rem 1.5rem 3rem; /* 3개의 행을 생성 */
     grid-template-areas:
       'image'
       'title'
@@ -101,6 +101,8 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
     align-items: center;
     padding-right: 1rem;
     padding-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     font-weight: bold;
     color: ${(props) => props.boardColor};
   }

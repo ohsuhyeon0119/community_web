@@ -3,6 +3,9 @@ const LOGOUT = 'LOGOUT';
 const INIT = 'INIT'; // 새로고침 시, 로컬 스토리지에 값이 있는지를 확인한다.
 const ALERT = 'ALERT';
 const ALERT_CLOSE = 'ALERT_CLOSE';
+const DELETE = 'DELETE';
+const DELETE_CLOSE = 'DELETE_CLOSE';
+
 // action creator
 export function setAlertClose() {
   return {
@@ -12,6 +15,16 @@ export function setAlertClose() {
 export function setAlert() {
   return {
     type: ALERT,
+  };
+}
+export function setDelete() {
+  return {
+    type: DELETE,
+  };
+}
+export function setDeleteClose() {
+  return {
+    type: DELETE_CLOSE,
   };
 }
 export function setLogin(token: string) {
@@ -35,6 +48,7 @@ type State = {
   isLoggedIn: boolean;
   token: string | null;
   alertModal_isvisible: boolean;
+  deleteModal_isvisible: boolean;
 };
 
 type Action = ReturnType<typeof setLogin>;
@@ -43,6 +57,7 @@ const initialState = {
   isLoggedIn: false,
   token: null,
   alertModal_isvisible: false,
+  deleteModal_isvisible: false,
 };
 
 function setTokenWithExpiry(token: string) {
@@ -80,24 +95,61 @@ export default function loginStateReducer(
         isLoggedIn: true,
         token: action.payload,
         alertModal_isvisible: false,
+        deleteModal_isvisible: false,
       };
 
     case LOGOUT:
       localStorage.removeItem('token');
-      return { isLoggedIn: false, token: null, alertModal_isvisible: false };
+      return {
+        isLoggedIn: false,
+        token: null,
+        alertModal_isvisible: false,
+        deleteModal_isvisible: false,
+      };
     case INIT:
       // 초기화 또는 TOKEN값을 갖고 올때 항상 초기화 해야 한다(스토리지 만료 여부 확인 위해서)
       const token = getToken();
 
       if (token !== null) {
-        return { isLoggedIn: true, token: token, alertModal_isvisible: false };
+        return {
+          isLoggedIn: true,
+          token: token,
+          alertModal_isvisible: false,
+          deleteModal_isvisible: false,
+        };
       } else {
-        return { isLoggedIn: false, token: null, alertModal_isvisible: false };
+        return {
+          isLoggedIn: false,
+          token: null,
+          alertModal_isvisible: false,
+          deleteModal_isvisible: false,
+        };
       }
     case ALERT:
-      return { ...state, alertModal_isvisible: true };
+      return {
+        ...state,
+        alertModal_isvisible: true,
+        deleteModal_isvisible: false,
+      };
     case ALERT_CLOSE:
-      return { ...state, alertModal_isvisible: false };
+      return {
+        ...state,
+        alertModal_isvisible: false,
+        deleteModal_isvisible: false,
+      };
+    case DELETE:
+      return {
+        ...state,
+        alertModal_isvisible: false,
+        deleteModal_isvisible: true,
+      };
+    case DELETE_CLOSE:
+      return {
+        ...state,
+        alertModal_isvisible: false,
+        deleteModal_isvisible: false,
+      };
+
     default:
       return state;
   }

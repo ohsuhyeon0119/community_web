@@ -6,6 +6,7 @@ import styled, { css } from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 
 const StyledTheadListWrapper = styled.div`
+  margin-top: 5rem;
   & .threadItemContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
@@ -48,6 +49,9 @@ export default function LatestThreads() {
       >
         🔥 HOT REVIEWS 🔥
       </h1>
+      <p style={{ textAlign: 'center', fontSize: '1em', marginBottom: '3rem' }}>
+        많은 사람들에게 공감 받는 리뷰들을 확인하세요.
+      </p>
 
       {!!threadListQuery.data && !!boardsQuery && (
         <div className={'threadItemContainer'}>

@@ -322,7 +322,7 @@ export function Write() {
               <BsFillBookmarkFill></BsFillBookmarkFill>
             </span>
           </IconContext.Provider>
-          <h1>✍ 리뷰 올리기 ✍</h1>
+          <h1>✍ 리뷰 WRITE ✍</h1>
           <SelectBox
             {...{
               isSelectboxClicked,

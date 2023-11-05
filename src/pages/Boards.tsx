@@ -112,6 +112,9 @@ export default function Boards() {
   });
   const [carouselIndex, setCarouselIndex] = useState(0);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <StyledBoardsWrapper carouselindex={carouselIndex}>
       <h1>B O A R D S</h1>

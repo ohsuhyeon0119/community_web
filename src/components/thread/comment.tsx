@@ -10,9 +10,8 @@ const StyledCommentWrapper = styled.div`
 
   .commentbox {
     width: 80%;
-    border-left: 1.2px solid rgb(222, 222, 222);
-    border-right: 1.2px solid rgb(222, 222, 222);
-    border-bottom: 1.2px solid rgb(222, 222, 222);
+
+    border-top: 1.2px solid rgb(222, 222, 222);
     min-height: 6rem;
     padding: 0.3rem 0.5rem 0.3rem 0.5rem;
   }
@@ -71,7 +70,7 @@ export default function Comment({ comment }: CommentProps) {
     <StyledCommentWrapper>
       {' '}
       <div className="commentbox">
-        <p className="explanation">
+        <div className="explanation">
           <div className="username">
             <FaRegUser></FaRegUser> {comment.username}
           </div>
@@ -79,7 +78,7 @@ export default function Comment({ comment }: CommentProps) {
             <button>수정</button>
             <button>삭제</button>
           </div>
-        </p>
+        </div>
         <p className="content">{comment.content}</p>
         <span
           className="thumbsup"

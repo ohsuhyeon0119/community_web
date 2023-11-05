@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { apiURL } from '../App';
 import { setLogout } from '../module/loginstate';
-import { useEffect, uses } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 export default function User() {
   const navi = useNavigate();
