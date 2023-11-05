@@ -8,12 +8,12 @@ import { IoCreateOutline } from 'react-icons/io5';
 import { setAlert } from '../module/loginstate';
 const StyledHeaderWrapper = styled.div`
   z-index: 100;
-  background-color: white;
+  background-color: #f8f9fa;
   top: 0px;
   position: fixed;
   height: 3.2rem;
   border-bottom: 1.2px solid rgb(222, 222, 222);
-  width: 100vw;
+  width: 100%;
 
   display: none;
 

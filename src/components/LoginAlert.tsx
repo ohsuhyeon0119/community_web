@@ -68,6 +68,9 @@ const StyledLoginAlertWrapper = styled.div`
   }
   .loginButton,
   .signupButton {
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.5rem;
     transform: scale(1.1);
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -79,9 +82,33 @@ const StyledLoginAlertWrapper = styled.div`
   .signupButton {
     background-color: #9fc0de;
   }
+  .fadeout {
+    animation: fadeout 0.5s forwards;
+  }
+  .modalout {
+    animation: modalout 0.5s forwards;
+  }
+  @keyframes fadeout {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes modalout {
+    from {
+      transform: translateY(0vh) scale(1);
+    }
+    to {
+      transform: translateY(90vh) scale(0);
+    }
+  }
 `;
 
 export default function LoginAlert() {
+  const [onAnimate_modalout, set_onAnimate_modalout] = useState<boolean>(false);
+
   const navi = useNavigate();
   const alertModal_isvisible = useSelector(
     (state: RootState) => state.loginStateReducer.alertModal_isvisible
@@ -116,25 +143,34 @@ export default function LoginAlert() {
       scroll_allow(prevScrollY);
     };
   }, []);
+  useEffect(() => {
+    const timer = onAnimate_modalout
+      ? setTimeout(() => {
+          set_onAnimate_modalout(false);
+          onSetAlertClose();
+        }, 300)
+      : undefined;
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [onAnimate_modalout]);
 
   return (
     <StyledLoginAlertWrapper>
       <div
-        className={`background`}
+        className={`background ${onAnimate_modalout && 'fadeout'}`}
         onClick={() => {
-          onSetAlertClose();
+          set_onAnimate_modalout(true);
         }}
       >
         <div
           onClick={(e) => {
             e.stopPropagation();
           }}
-          className={`alertModal`}
+          className={`alertModal ${onAnimate_modalout && 'modalout'}`}
         >
           <h1>LOGIN 해주세요!</h1>
-          <p className={'text'}>
-            해당 페이지는 로그인을 해야만 이용할 수 있습니다.
-          </p>
+          <p className={'text'}>로그인 또는 회원가입을 진행하세요</p>
 
           <div className={'buttonBox'}>
             <button

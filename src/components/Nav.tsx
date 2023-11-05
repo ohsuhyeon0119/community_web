@@ -23,28 +23,27 @@ const StyledNavWrapper = styled.div`
     position: fixed;
     height: 100vh;
     z-index: 100;
-    width: 100px;
+    width: 80px;
     justify-content: space-around;
-    background-color: white;
+    background-color: #f8f9fa;
     border-right: 1px solid rgb(222, 222, 222);
   }
   & .navButton {
     width: 3.5rem;
     height: 3.5rem;
 
-    background-color: white;
+    background-color: #f8f9fa;
     transform: scale(1);
     border-radius: 20px;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background-color: white;
+
     transform: scale(1);
     transition: transform 0.3s;
   }
   & .navButton:hover {
-    background-color: rgba(192, 192, 192, 0.7);
     transform: scale(1.1);
   }
   .writeContainer {
@@ -62,7 +61,7 @@ const StyledNavWrapper = styled.div`
       position: fixed;
       height: 3.3rem;
       border-top: 1.2px solid rgb(222, 222, 222);
-      width: 100vw;
+      width: 100%;
       justify-content: space-around;
     }
     & .navButton {

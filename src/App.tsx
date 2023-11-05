@@ -56,8 +56,10 @@ function App() {
     dispatch(setLogout());
   }
   useEffect(() => {
+    // 로그인 여부 초기화
     onInit();
   }, []);
+
   return (
     <>
       {alertModal_isvisible && <LoginAlert></LoginAlert>}

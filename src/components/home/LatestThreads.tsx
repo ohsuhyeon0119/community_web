@@ -1,23 +1,21 @@
 import { ThreadItem } from '../ThreadItem';
 import { useState, useEffect } from 'react';
-import styles from './../../pages/Home.module.css';
-import { apiURL } from '../../App';
-import type { Thread } from '../../App';
-import type { Board } from '../../App';
+
 import { getThreadList, getBoards } from '../../api/index';
 import styled, { css } from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+
 const StyledTheadListWrapper = styled.div`
   & .threadItemContainer {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(18em, 1fr));
 
-    grid-gap: 2rem;
+    grid-gap: 4rem;
     padding: 0.7rem;
     width: 100%;
   }
   & .gridCell {
+    color: #444444;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,9 +24,8 @@ const StyledTheadListWrapper = styled.div`
   @media (max-width: 768px) {
     & .threadItemContainer {
       grid-template-columns: 1fr;
-
-      grid-gap: 1.5rem;
       padding: 0rem;
+      grid-gap: 1.5rem;
     }
   }
 `;
@@ -46,12 +43,12 @@ export default function LatestThreads() {
 
   return (
     <StyledTheadListWrapper>
-      <h1 style={{ textAlign: 'center', fontSize: '3em' }}>LATEST THREADS</h1>
-      <p
-        style={{ textAlign: 'center', fontSize: '1.5em', marginBottom: '4em' }}
+      <h1
+        style={{ textAlign: 'center', fontSize: '2.5em', marginBottom: '4rem' }}
       >
-        최근에 올라온 글들을 확인하세요!
-      </p>
+        🔥 HOT REVIEWS 🔥
+      </h1>
+
       {!!threadListQuery.data && !!boardsQuery && (
         <div className={'threadItemContainer'}>
           {threadListQuery.data?.map((thread) => {

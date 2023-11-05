@@ -5,8 +5,10 @@ import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 import type { Thread } from '../App';
 import { useNavigate } from 'react-router-dom';
-
+import { imgDb } from '../db';
 import styled, { keyframes, css } from 'styled-components';
+import { BsFillBookmarkFill } from 'react-icons/bs';
+import { IconContext } from 'react-icons';
 interface ThreadItemProps {
   thread: Thread;
   boardColor: string | undefined;
@@ -16,62 +18,100 @@ interface StyledThreadItemWrapperProps {
 }
 
 const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
-  & .threadItem {
+  .threadItem {
     text-align: center;
     /* 반응형 고려해야 함 */
     width: 18rem;
-    height: 18rem;
+
     display: grid;
-    grid-template-columns: 3fr 2fr 2fr 2fr;
-    grid-template-rows: 1fr 3fr 1fr 1fr; /* 3개의 행을 생성 */
+
+    grid-template-rows: 8rem 1.5rem 5rem 1.5rem 1.5rem; /* 3개의 행을 생성 */
     grid-template-areas:
-      'title title title title'
-      'content content content content'
-      'tag tag tag tag'
-      'board comment comment comment';
+      'image'
+      'title'
+      'content'
+      'date'
+      'info';
 
     /* 애니메이션  */
     transform: translateY(0rem);
     box-shadow: 0.08rem 0.08rem 0.08rem 0.08rem rgba(78, 120, 97, 0.3);
     transition: box-shadow 0.5s, transform 1s, opacity 1s;
 
-    padding: 0.3rem;
     opacity: 0;
-
-    border: 1rem solid ${(props) => props.boardColor};
+    margin: 1rem;
   }
   /* 이미 보여진 경우 애니메이션은 따로 실행하지 않는다. */
 
-  & .alreadyShown {
+  .alreadyShown {
     opacity: 1;
     transform: translateY(-1.5rem);
   }
 
-  & .threadItem > * {
+  .threadItem > * {
     cursor: pointer;
   }
-  & .title {
+  .image {
+    grid-area: image;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+  .title {
     grid-area: title;
   }
-  & .tag {
-    grid-area: tag;
+  .title h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     text-align: center;
   }
-
-  & .comment {
-    grid-area: comment;
-    text-align: right;
-    margin-right: 1rem;
-  }
-  & .content {
+  .content {
     grid-area: content;
-    font-size: 0.8rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
-  & .board {
-    grid-area: board;
+  .content p {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    height: 5rem;
+    margin: 0px;
+    text-align: left;
+  }
+  .date {
+    grid-area: date;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+  .date p {
+    padding: 0rem;
+    margin: 0px;
+    text-align: right;
+  }
+  .info {
+    grid-area: info;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-weight: bold;
+    color: ${(props) => props.boardColor};
+  }
+
+  .info .tag {
+    text-align: left;
+  }
+  .comment {
+    span + span {
+      margin-left: 0.5rem;
+    }
   }
 
   & .threadItem:hover {
@@ -79,18 +119,12 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
     background-color: ${(props) => props.boardColor};
     transform: translateY(-2.5rem);
     color: white;
-  }
-  & p {
-    margin: 0;
-    padding: 0;
+    .info {
+      color: white;
+    }
   }
 
-  & h3 {
-    font-size: 2rem;
-    font-weight: bold;
-  }
   & .ellipsis {
-    font-size: 0.8rem;
     overflow: hidden;
     white-space: normal;
     text-overflow: ellipsis;
@@ -103,8 +137,6 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
   @media (max-width: 768px) {
     & .threadItem {
       width: 90vw;
-
-      height: 15rem;
     }
   }
 `;
@@ -118,6 +150,8 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
   const { ref, inView } = useInView({
     threshold: 0.4,
   });
+  const randomNumber = Math.floor(Math.random() * 10);
+  const [randomImg, setRandomImg] = useState(randomNumber);
 
   // 자신의 boardName에 해당하는 컬러를 가져온다... 그런데 이거는
   // 나중에 변경 필요. 이러면 모든 thread가 api 요청을 하므로
@@ -132,25 +166,40 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
   return (
     <StyledThreadItemWrapper boardColor={boardColor}>
       <div
+        id={`item_${thread.id}`}
         onClick={() => {
           navi('/thread/' + thread.id.toString());
         }}
         ref={ref}
         className={`threadItem ${isShown && 'alreadyShown'}`} //이미 보여줬으면 효과를 또다시 나타낼 필요 없다.
       >
-        <div className="board">
-          <AiFillTag></AiFillTag>
-          {thread.boardName}
+        <div className="image">
+          <img src={imgDb[randomImg]}></img>
         </div>
         <div className="title">
           <h3>{thread.title}</h3>
         </div>
-        <div className={`content ellipsiis`}>{thread.content}</div>
+        <div className={`content ellipsiis`}>
+          <p>{thread.content}</p>
+        </div>
 
-        <div className="tag">#NGO #환경보호 #크라우드펀딩</div>
-        <div className="comment">
-          <BiCommentDetail></BiCommentDetail> 3<AiOutlineHeart></AiOutlineHeart>{' '}
-          11
+        <div className="date">
+          <p>2023-11-05</p>
+        </div>
+        <div className="info">
+          <p className="tag">
+            <BsFillBookmarkFill></BsFillBookmarkFill>
+            {thread.boardName}
+          </p>
+
+          <p className="comment">
+            <span>
+              <BiCommentDetail></BiCommentDetail>3
+            </span>
+            <span>
+              <AiOutlineHeart></AiOutlineHeart>11
+            </span>
+          </p>
         </div>
       </div>
     </StyledThreadItemWrapper>

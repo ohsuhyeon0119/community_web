@@ -12,17 +12,22 @@ const ExplanationWrapper = styled.div<ExplanationWrapperProps>`
     padding: 3rem 2rem 3rem 2rem;
     border-top: '';
     border-bottom: 0.1rem solid rgb(222, 222, 222);
-
+    text-align: center;
     line-height: 3rem;
   }
   & .explanation {
-    transition: opacity 2s;
     opacity: 0;
+    transition: opacity 2s;
     ${(props) =>
       props.isshown === 'isshown' &&
       css`
         opacity: 1;
       `}
+  }
+  span {
+    color: #eca55d;
+    font-size: 3.6rem;
+    font-weight: bold;
   }
 `;
 
@@ -48,11 +53,9 @@ export function Explanation() {
   return (
     <ExplanationWrapper isshown={isshown ? 'isshown' : undefined}>
       <p ref={ref} className={`explanation`}>
-        GETWORLD에서는 정치와 경제, 과학과 기술 등을 아우르는 주제를 자유롭게
-        이야기하는 커뮤니티 공간입니다. 전세계에서 일어나는 수많은 이슈에 대해
-        당신의 생각을 말해주세요, 타인의 생각을 읽어보세요, 함께 이야기할 때
-        우리의 시야는 한층 성장합니다. 우리는 당신이 이 21세기 포럼의 참여자가
-        되길 원합니다.
+        이<span>세</span>상 <span>모</span>든 것들에 대한 <span>리</span>에서
+        당신이 사용한 상품에 대한 리뷰를 남겨보세요. 당신의 의견이 다른
+        사람들에게 큰 도움이 됩니다.
       </p>
     </ExplanationWrapper>
   );

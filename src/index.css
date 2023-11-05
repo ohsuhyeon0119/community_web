@@ -1,7 +1,9 @@
 * {
   font-family: 'Nanum Gothic', sans-serif;
+
   box-sizing: border-box;
 }
 body {
   margin: 0px;
+  background-color: #f8f9fa;
 }
