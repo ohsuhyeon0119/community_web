@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDelete, setDeleteClose } from '../module/loginstate';
+import { setDeleteClose } from '../../module/modal';
 import styled from 'styled-components';
-import { RootState } from '../module';
+import { RootState } from '../../module';
 import { useNavigate } from 'react-router-dom';
-import { deleteThreadById } from '../api';
+import { deleteThreadById } from '../../api/api';
 import { useMutation } from '@tanstack/react-query';
 const Styleddeletemodalrapper = styled.div`
   .background {
@@ -112,7 +112,7 @@ interface DeletemodalProps {
   setDeleteId: (value: number | null) => void;
   deleteId: number | null;
 }
-export default function DelteModal({
+export default function DeleteModal({
   deleteId,
   setDeleteId,
 }: DeletemodalProps) {
@@ -130,7 +130,7 @@ export default function DelteModal({
 
   const navi = useNavigate();
   const deleteModal_isvisible = useSelector(
-    (state: RootState) => state.loginStateReducer.deleteModal_isvisible
+    (state: RootState) => state.modalReducer.deleteModal_isvisible
   );
   const dispatch = useDispatch();
 

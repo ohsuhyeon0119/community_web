@@ -70,12 +70,13 @@ const ButtonBox = styled.div`
   }
   button {
     border-radius: 15px;
-    font-weight : 800;
-    background-color: 
+    font-weight: 800;
     border-radius: 5px;
     border: none;
     background-color: #ff3399;
     cursor: pointer;
+
+    
   }
 `;
 

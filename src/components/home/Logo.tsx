@@ -10,6 +10,7 @@ const StyledLogoWrapper = styled.div`
     font-size: 5rem;
   }
 `;
+
 export function Logo() {
   const logoLetters = ['세', '모', '리'];
 

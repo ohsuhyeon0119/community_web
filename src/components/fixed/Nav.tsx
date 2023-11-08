@@ -11,8 +11,8 @@ import { BiSolidUser } from 'react-icons/bi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled, { keyframes, css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../module';
-import { setAlert } from '../module/loginstate';
+import { RootState } from '../../module';
+import { setAlert } from '../../module/modal';
 const StyledNavWrapper = styled.div`
   & .Nav {
     display: flex;
@@ -116,7 +116,7 @@ export function Nav() {
           </div>
           <div
             onClick={() => {
-              navigate('/boards/all');
+              navigate('/boards/all?pagenum=1');
             }}
             className={'navButton threadContainer'}
           >

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAlert, setAlertClose } from '../module/loginstate';
+import { setAlert, setAlertClose } from '../../module/modal';
 import styled from 'styled-components';
-import { RootState } from '../module';
+import { RootState } from '../../module';
 import { useNavigate } from 'react-router-dom';
 const StyledLoginAlertWrapper = styled.div`
   .background {
@@ -111,7 +111,7 @@ export default function LoginAlert() {
 
   const navi = useNavigate();
   const alertModal_isvisible = useSelector(
-    (state: RootState) => state.loginStateReducer.alertModal_isvisible
+    (state: RootState) => state.modalReducer.alertModal_isvisible
   );
   const dispatch = useDispatch();
   function onSetAlert() {

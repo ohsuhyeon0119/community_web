@@ -9,23 +9,24 @@ const StyledCommentWrapper = styled.div`
   align-items: center;
 
   .commentbox {
-    width: 80%;
-
-    border-top: 1.2px solid rgb(222, 222, 222);
+    width: 100%;
+    border-bottom: 1.2px solid rgb(222, 222, 222);
     min-height: 6rem;
     padding: 0.3rem 0.5rem 0.3rem 0.5rem;
   }
+
   @media (max-width: 768px) {
     .commentbox {
       width: 100%;
     }
   }
 
-  .explanation {
+  .commentControl {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 0.5rem;
+    padding: 0px;
   }
   .username {
     font-size: 1.2rem;
@@ -70,7 +71,7 @@ export default function Comment({ comment }: CommentProps) {
     <StyledCommentWrapper>
       {' '}
       <div className="commentbox">
-        <div className="explanation">
+        <div className="commentControl">
           <div className="username">
             <FaRegUser></FaRegUser> {comment.username}
           </div>

@@ -5,20 +5,19 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../module';
 import { ChangeTitle, ChangeContent } from '../module/write';
-import { getThreadById, getBoards } from '../api/index';
+import { getThreadById, getBoards, updateThread } from '../api/api';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { BsFillBookmarkFill } from 'react-icons/bs';
 import { IconContext } from 'react-icons';
 import React from 'react';
-import axios from 'axios';
-import { SelectBox } from '../components/SelectBox';
-
+import { SelectBox } from '../components/write/SelectBox';
+import type { Board, PostThread, UpdateThread } from '../type/type';
+import { writeThread } from '../api/api';
 interface StyledCreatePageWrapperProps {
   boardclicked: 'boardclicked' | undefined;
   boxclicked: 'boxclicked' | undefined;
   boardcolor: string;
 }
-// styled component에서  interface 나중에 다 이걸로 바꾸기
 
 const StyledCreatePageWrapper = styled.div<StyledCreatePageWrapperProps>`
   h1 {
@@ -211,23 +210,22 @@ export function Write() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const dispatch = useDispatch();
   const [previewImgSrc, setPreviewImgSrc] = useState('');
-
   const isLoggedIn = useSelector(
     (state: RootState) => state.loginStateReducer.isLoggedIn
   );
 
   const queryClient = useQueryClient(); // 캐싱에 대한 직접 접근 및 조작
   const postThreadMutation = useMutation({
-    mutationFn: (data) => {
-      return axios.post(`${apiURL}/thread`, data).then((res) => res.data);
+    mutationFn: (data: PostThread) => {
+      return writeThread(data);
     },
     onSuccess: (data) => {
       navi('/thread/' + data.id);
     },
   });
   const updateThreadMutation = useMutation({
-    mutationFn: (data) => {
-      return axios.put(`${apiURL}/thread/${id}`, data).then((res) => res.data);
+    mutationFn: (data: UpdateThread) => {
+      return updateThread(data, id);
     },
     onSuccess: () => {
       navi('/thread/' + id);
@@ -260,12 +258,13 @@ export function Write() {
 
   useEffect(() => {
     if (!!id && !!thread && !!boards) {
-      const clickedBoardColor = boards?.filter((boardItem) => {
+      const clickedBoardColor = boards?.find((boardItem: Board) => {
         return boardItem.boardName === thread?.boardName;
-      })[0].boardColor;
+      }).boardColor;
+
       setBoardcolor(clickedBoardColor || '');
       // POST할 데이터 객체
-      console.log('clickedboardcolor : ', clickedBoardColor);
+
       setClickedBoard(thread?.boardName);
       // 선택한 board의 색깔을 검색
 
@@ -316,7 +315,6 @@ export function Write() {
             e.preventDefault();
           }}
         >
-          {' '}
           <IconContext.Provider value={{ size: '3rem', color: boardcolor }}>
             <span className="bookmark">
               <BsFillBookmarkFill></BsFillBookmarkFill>
@@ -356,7 +354,7 @@ export function Write() {
               // 스크롤 크기 만큼 높이를 늘려주는 로직
               onChangeContent(e.target.value);
             }}
-          />{' '}
+          />
           <hr />
           {!previewImgSrc && (
             <p className="labelWrapper">
@@ -396,7 +394,7 @@ export function Write() {
             <button
               className="submitButton"
               onClick={() => {
-                const data = {
+                const data: UpdateThread = {
                   title: title,
                   content: content,
                   boardName: clickedBoard,

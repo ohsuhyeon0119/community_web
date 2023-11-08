@@ -1,9 +1,10 @@
-import { ThreadItem } from '../ThreadItem';
-import { useState, useEffect } from 'react';
+import { ThreadItem } from './ThreadItem';
 
-import { getThreadList, getBoards } from '../../api/index';
-import styled, { css } from 'styled-components';
+import { getThreadList, getBoards } from '../../api/api';
+import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
+import { Thread } from '../../type/type';
+import type { Board } from '../../type/type';
 
 const StyledTheadListWrapper = styled.div`
   margin-top: 5rem;
@@ -31,7 +32,7 @@ const StyledTheadListWrapper = styled.div`
   }
 `;
 
-export default function LatestThreads() {
+export default function HotThreads() {
   const threadListQuery = useQuery({
     queryKey: ['board', 'all'],
     queryFn: getThreadList,
@@ -41,6 +42,9 @@ export default function LatestThreads() {
     queryKey: ['boards'],
     queryFn: getBoards,
   });
+
+  const boards = boardsQuery.data;
+  const threadList: Thread[] = threadListQuery.data;
 
   return (
     <StyledTheadListWrapper>
@@ -53,18 +57,17 @@ export default function LatestThreads() {
         많은 사람들에게 공감 받는 리뷰들을 확인하세요.
       </p>
 
-      {!!threadListQuery.data && !!boardsQuery && (
+      {!!threadList && !!boards && (
         <div className={'threadItemContainer'}>
-          {threadListQuery.data?.map((thread) => {
-            const boardColor = boardsQuery.data?.filter((board) => {
+          {threadList.map((thread: Thread, i) => {
+            const boardColor = boards?.find((board: Board) => {
               return board.boardName === thread.boardName;
-            })[0].boardColor; // boards에서 thread의 boardName과 같은 board의 boardColor를 가져온다.
-            console.log('boardColor: ', boardColor);
+            }).boardColor; // boards에서 thread의 boardName과 같은 board의 boardColor를 가져온다.
+
             return (
-              <div className={'gridCell'}>
+              <div key={i} className={'gridCell'}>
                 <ThreadItem
                   boardColor={boardColor}
-                  key={thread.id as number}
                   thread={thread}
                 ></ThreadItem>
               </div>

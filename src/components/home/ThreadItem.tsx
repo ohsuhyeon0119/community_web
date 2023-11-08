@@ -1,20 +1,21 @@
 import { BiCommentDetail } from 'react-icons/bi';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { AiFillTag } from 'react-icons/ai';
+
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
-import type { Thread } from '../App';
+import type { Thread } from '../../type/type';
 import { useNavigate } from 'react-router-dom';
-import { imgDb } from '../db';
-import styled, { keyframes, css } from 'styled-components';
+import { imgDb } from '../../db';
+import styled from 'styled-components';
 import { BsFillBookmarkFill } from 'react-icons/bs';
-import { IconContext } from 'react-icons';
+import { getlimitedString } from '../../utils/utils';
+
 interface ThreadItemProps {
   thread: Thread;
   boardColor: string | undefined;
 }
 interface StyledThreadItemWrapperProps {
-  boardColor: string | undefined;
+  boardcolor: string | undefined;
 }
 
 const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
@@ -104,7 +105,7 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-weight: bold;
-    color: ${(props) => props.boardColor};
+    color: ${(props) => props.boardcolor};
   }
 
   .info .tag {
@@ -118,7 +119,7 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
 
   & .threadItem:hover {
     box-shadow: 0.2rem 0.2rem 0.7rem 0.2rem rgba(78, 120, 97, 0.3);
-    background-color: ${(props) => props.boardColor};
+    background-color: ${(props) => props.boardcolor};
     transform: translateY(-2.5rem);
     color: white;
     .info {
@@ -141,6 +142,12 @@ const StyledThreadItemWrapper = styled.div<StyledThreadItemWrapperProps>`
       width: 90vw;
     }
   }
+  .commenticon {
+    margin-right: 0.5rem;
+  }
+  .hearticon {
+    margin-right: 0.5rem;
+  }
 `;
 
 //boardColor는 스타일링을 위해서 가져온 것.
@@ -152,7 +159,7 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
   const { ref, inView } = useInView({
     threshold: 0.4,
   });
-  const randomNumber = Math.floor(Math.random() * 10);
+  const randomNumber = Math.floor(Math.random() * 5);
   const [randomImg, setRandomImg] = useState(randomNumber);
 
   // 자신의 boardName에 해당하는 컬러를 가져온다... 그런데 이거는
@@ -166,7 +173,7 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
   }, [inView]);
 
   return (
-    <StyledThreadItemWrapper boardColor={boardColor}>
+    <StyledThreadItemWrapper boardcolor={boardColor}>
       <div
         id={`item_${thread.id}`}
         onClick={() => {
@@ -182,11 +189,11 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
           <h3>{thread.title}</h3>
         </div>
         <div className={`content ellipsiis`}>
-          <p>{thread.content}</p>
+          <p>{getlimitedString(thread.content)}</p>
         </div>
 
         <div className="date">
-          <p>2023-11-05</p>
+          <p>{new Date(thread.date).toLocaleDateString()}</p>
         </div>
         <div className="info">
           <p className="tag">
@@ -196,10 +203,18 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
 
           <p className="comment">
             <span>
-              <BiCommentDetail></BiCommentDetail>3
+              <span className="commenticon">
+                {' '}
+                <BiCommentDetail></BiCommentDetail>
+              </span>
+              11
             </span>
             <span>
-              <AiOutlineHeart></AiOutlineHeart>11
+              <span className="hearticon">
+                {' '}
+                <AiOutlineHeart> </AiOutlineHeart>
+              </span>
+              0
             </span>
           </p>
         </div>

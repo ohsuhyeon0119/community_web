@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../module';
+import { RootState } from '../../module';
 import { IoIosCreate } from 'react-icons/io';
 import { IoCreateOutline } from 'react-icons/io5';
-import { setAlert } from '../module/loginstate';
+import { setAlert } from '../../module/modal';
 const StyledHeaderWrapper = styled.div`
   z-index: 100;
   background-color: #f8f9fa;
@@ -55,9 +55,6 @@ const StyledHeaderWrapper = styled.div`
     font-size: 1.5rem;
     cursor: pointer;
     transition: transform 0.3s;
-  }
-  .icon: hover {
-    transform: scale(1.2);
   }
 `;
 

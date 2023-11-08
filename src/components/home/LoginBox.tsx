@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
-import { init, setLogin, setLogout } from '../../module/loginstate';
+import { initLoginState, setLogin, setLogout } from '../../module/loginstate';
 import axios from 'axios';
 import { apiURL } from '../../App';
 import { RootState } from '../../module';

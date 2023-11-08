@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledFooterWrapper = styled.div`
-  & .Footer {
+  .Footer {
     display: flex;
 
     justify-content: space-between;
@@ -9,7 +9,12 @@ const StyledFooterWrapper = styled.div`
     height: 100%;
     width: 100%;
     text-align: center;
+    padding-top: 1rem;
+    padding-left: 5rem;
     color: rgb(131, 130, 130);
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 export function Footer() {

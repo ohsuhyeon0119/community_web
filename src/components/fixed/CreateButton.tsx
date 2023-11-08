@@ -1,9 +1,9 @@
 import { IoIosCreate } from 'react-icons/io';
 import { IoCreateOutline } from 'react-icons/io5';
 import { IconContext } from 'react-icons';
-import { setAlert } from '../module/loginstate';
+import { setAlert } from '../../module/modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../module';
+import { RootState } from '../../module';
 import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 

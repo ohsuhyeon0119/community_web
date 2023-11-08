@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { AiOutlineDown } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
-import type { Board } from '../App';
+import type { Board } from '../../type/type';
 import { AiOutlineUp } from 'react-icons/ai';
-import React from 'react';
 
 interface SelectBoxProps {
   isSelectboxClicked: boolean;
@@ -21,7 +20,6 @@ export function SelectBox({
   boards,
   setBoardcolor,
 }: SelectBoxProps) {
-  //똑같은 api가 latesthread에도 있음. 이거는 나중에 고치기
   useEffect(() => {
     window.addEventListener('click', () => {
       setIsSelectboxClicked(false);
@@ -62,14 +60,15 @@ export function SelectBox({
                 return (
                   <div
                     onClick={() => {
-                      const clickedBoardColor = boards?.filter((boardItem) => {
-                        return boardItem.boardName === board.boardName;
-                      })[0].boardColor;
-                      setBoardcolor(clickedBoardColor || '');
-                      // POST할 데이터 객체
-                      console.log('clickedboardcolor : ', clickedBoardColor);
-                      setClickedBoard(board.boardName);
-                      // 선택한 board의 색깔을 검색
+                      if (!!boards) {
+                        const clickedBoardColor = board.boardColor;
+                        console.log('clickedBoardColor : ', clickedBoardColor);
+                        setBoardcolor(clickedBoardColor || '');
+                        // POST할 데이터 객체
+                        console.log('clickedboardcolor : ', clickedBoardColor);
+                        setClickedBoard(board.boardName);
+                        // 선택한 board의 색깔을 검색
+                      }
                     }}
                     key={i}
                     className={'selectItem'}

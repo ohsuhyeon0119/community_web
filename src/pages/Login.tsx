@@ -3,7 +3,7 @@ import { apiURL } from '../App';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
-import { init, setLogin, setLogout } from './../module/loginstate';
+import { setLogin } from './../module/loginstate';
 import { RootState } from './../module';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -78,8 +78,8 @@ const ButtonBox = styled.div`
   }
   button {
     border-radius: 15px;
-    font-weight : 800;
-    background-color: 
+    font-weight: 800;
+
     border-radius: 5px;
     border: none;
     background-color: #ff3399;
@@ -95,19 +95,10 @@ export function Login() {
   const isLoggedIn = useSelector(
     (state: RootState) => state.loginStateReducer.isLoggedIn
   );
-  const token = useSelector(
-    (state: RootState) => state.loginStateReducer.token
-  );
+
   const dispatch = useDispatch();
-  function onInit() {
-    // 로컬 스토리지의 만료 여부 확인
-    dispatch(init());
-  }
   function onLogin(token: string) {
     dispatch(setLogin(token));
-  }
-  function onLogout() {
-    dispatch(setLogout());
   }
 
   const loginMutation = useMutation({

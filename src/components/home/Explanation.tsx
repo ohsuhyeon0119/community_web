@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 
 interface ExplanationWrapperProps {
-  isshown: undefined | string;
+  $isshown: string;
 }
 
 const ExplanationWrapper = styled.div<ExplanationWrapperProps>`
@@ -22,7 +22,7 @@ const ExplanationWrapper = styled.div<ExplanationWrapperProps>`
 
     transition: all 2.5s;
     ${(props) =>
-      props.isshown === 'isshown' &&
+      props.$isshown === 'isshown' &&
       css`
         transform: translateY(0rem);
         opacity: 1;
@@ -40,7 +40,7 @@ const ExplanationWrapper = styled.div<ExplanationWrapperProps>`
 `;
 
 export function Explanation() {
-  const [isshown, setIsshown] = useState(false);
+  const [isshown, setIsshown] = useState('');
 
   const { ref, inView } = useInView({
     threshold: 0.6,
@@ -53,13 +53,12 @@ export function Explanation() {
   useEffect(() => {
     console.log('inview :', inView);
     if (inView) {
-      setIsshown(true);
-      console.log('isshown :', isshown);
+      setIsshown('isshown');
     }
   }, [inView]);
 
   return (
-    <ExplanationWrapper isshown={isshown ? 'isshown' : undefined}>
+    <ExplanationWrapper $isshown={isshown}>
       <p ref={ref} className={`explanation`}>
         <span>세</span>상의 <span>모</span>든 것들에 <br />
         <span className="letter_re">리</span>뷰를 남겨보세요 <br /> 당신의

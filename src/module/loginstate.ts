@@ -1,32 +1,11 @@
+import { setTokenWithExpiry, getToken } from '../utils/utils';
+
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const INIT = 'INIT'; // 새로고침 시, 로컬 스토리지에 값이 있는지를 확인한다.
-const ALERT = 'ALERT';
-const ALERT_CLOSE = 'ALERT_CLOSE';
-const DELETE = 'DELETE';
-const DELETE_CLOSE = 'DELETE_CLOSE';
 
 // action creator
-export function setAlertClose() {
-  return {
-    type: ALERT_CLOSE,
-  };
-}
-export function setAlert() {
-  return {
-    type: ALERT,
-  };
-}
-export function setDelete() {
-  return {
-    type: DELETE,
-  };
-}
-export function setDeleteClose() {
-  return {
-    type: DELETE_CLOSE,
-  };
-}
+
 export function setLogin(token: string) {
   return {
     type: LOGIN,
@@ -38,7 +17,7 @@ export function setLogout() {
     type: LOGOUT,
   };
 }
-export function init() {
+export function initLoginState() {
   return {
     type: INIT,
   };
@@ -47,8 +26,6 @@ export function init() {
 type State = {
   isLoggedIn: boolean;
   token: string | null;
-  alertModal_isvisible: boolean;
-  deleteModal_isvisible: boolean;
 };
 
 type Action = ReturnType<typeof setLogin>;
@@ -56,32 +33,7 @@ type Action = ReturnType<typeof setLogin>;
 const initialState = {
   isLoggedIn: false,
   token: null,
-  alertModal_isvisible: false,
-  deleteModal_isvisible: false,
 };
-
-function setTokenWithExpiry(token: string) {
-  const now = new Date();
-  const item = {
-    value: token,
-    expiry: now.getTime() + 60 * 60 * 1000, // 현재 시간에 분을 더해 만료 시간 설정
-  };
-  localStorage.setItem('token', JSON.stringify(item));
-}
-function getToken() {
-  const token = localStorage.getItem('token');
-  console.log('token', token);
-  if (!token) {
-    return null;
-  }
-  const item = JSON.parse(token);
-  const now = new Date();
-  if (now.getTime() > item.expiry) {
-    localStorage.removeItem(token);
-    return null;
-  }
-  return item.value; //전역으로 관리하는 token은 string이어야 한다.
-}
 
 // 로그인된 경우의 user 정보는, 리액트 쿼리에서 따로 관리할 것이다.
 export default function loginStateReducer(
@@ -94,8 +46,6 @@ export default function loginStateReducer(
       return {
         isLoggedIn: true,
         token: action.payload,
-        alertModal_isvisible: false,
-        deleteModal_isvisible: false,
       };
 
     case LOGOUT:
@@ -103,8 +53,6 @@ export default function loginStateReducer(
       return {
         isLoggedIn: false,
         token: null,
-        alertModal_isvisible: false,
-        deleteModal_isvisible: false,
       };
     case INIT:
       // 초기화 또는 TOKEN값을 갖고 올때 항상 초기화 해야 한다(스토리지 만료 여부 확인 위해서)
@@ -114,41 +62,13 @@ export default function loginStateReducer(
         return {
           isLoggedIn: true,
           token: token,
-          alertModal_isvisible: false,
-          deleteModal_isvisible: false,
         };
       } else {
         return {
           isLoggedIn: false,
           token: null,
-          alertModal_isvisible: false,
-          deleteModal_isvisible: false,
         };
       }
-    case ALERT:
-      return {
-        ...state,
-        alertModal_isvisible: true,
-        deleteModal_isvisible: false,
-      };
-    case ALERT_CLOSE:
-      return {
-        ...state,
-        alertModal_isvisible: false,
-        deleteModal_isvisible: false,
-      };
-    case DELETE:
-      return {
-        ...state,
-        alertModal_isvisible: false,
-        deleteModal_isvisible: true,
-      };
-    case DELETE_CLOSE:
-      return {
-        ...state,
-        alertModal_isvisible: false,
-        deleteModal_isvisible: false,
-      };
 
     default:
       return state;
