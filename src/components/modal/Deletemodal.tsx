@@ -124,7 +124,7 @@ export default function DeleteModal({
     },
     onSuccess: () => {
       setDeleteId(null);
-      navi(-1);
+      navi('/boards/all?pagenum=1');
     },
   });
 

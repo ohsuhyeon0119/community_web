@@ -38,6 +38,7 @@ const StyledCreateButtonWrapper = styled.div`
 export function CreateButton() {
   const dispatch = useDispatch();
   const navi = useNavigate();
+  const { pathname, search } = useLocation();
   // 클릭 시 해당 페이지로 이동
   const isLoggedIn = useSelector(
     (state: RootState) => state.loginStateReducer.isLoggedIn
@@ -58,7 +59,7 @@ export function CreateButton() {
           <div
             onClick={() => {
               if (isLoggedIn) {
-                navi('/write');
+                navi('/write', { state: { pathname, search } });
               } else {
                 onSetAlert();
               }

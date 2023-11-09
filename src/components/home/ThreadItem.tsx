@@ -159,7 +159,7 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
   const { ref, inView } = useInView({
     threshold: 0.4,
   });
-  const randomNumber = Math.floor(Math.random() * 5);
+  const randomNumber = Math.floor(Math.random() * 15);
   const [randomImg, setRandomImg] = useState(randomNumber);
 
   // 자신의 boardName에 해당하는 컬러를 가져온다... 그런데 이거는

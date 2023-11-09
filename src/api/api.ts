@@ -21,3 +21,10 @@ export function writeThread(data: PostThread) {
 export function updateThread(data: PostThread, id?: string) {
   return axios.put(`${apiURL}/thread/${id}`, data).then((res) => res.data);
 }
+export function getUser(token: string) {
+  return axios
+    .get(apiURL + '/user', { headers: { Authorization: token } })
+    .then((res) => {
+      return res.data;
+    });
+}

@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogin } from './../module/loginstate';
 import { RootState } from './../module';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const StlyedLoginBoxWrapper = styled.div`
@@ -89,6 +89,8 @@ const ButtonBox = styled.div`
 
 export function Login() {
   const navi = useNavigate();
+  const { state } = useLocation(); // usenavigate로 저장한 pathname은 uselocation에서 가져온다
+  // state가 존재하면 login페이지로 이동했을때 이전 페이지가 이 웹사이트의 페이지임을 의미한다.
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -111,7 +113,16 @@ export function Login() {
       } else {
         console.log('login success', data.token);
         onLogin(data.token);
-        navi('/');
+        if (!!state.pathname) {
+          console.log('state', state);
+          if (state.pathname === '/signup') {
+            // 회원가입 페이지에서 로그인했을때에는 home으로 리다이렉트를 시킨다.
+            return navi('/');
+          }
+          navi('/user');
+        } else {
+          navi('/user');
+        }
       }
     },
   });

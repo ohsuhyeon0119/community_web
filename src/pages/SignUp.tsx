@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { styled } from 'styled-components';
 import { setLogin } from '../module/loginstate';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 const StlyedSignupBoxWrapper = styled.div`
   width: 100%;
@@ -75,8 +75,6 @@ const ButtonBox = styled.div`
     border: none;
     background-color: #ff3399;
     cursor: pointer;
-
-    
   }
 `;
 
@@ -87,20 +85,7 @@ export function SignUp() {
   const [inputPassword, setInputPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const dispatch = useDispatch();
-  const loginMutation = useMutation({
-    mutationFn: (data) => {
-      return axios.post(`${apiURL}/login`, data).then((res) => res.data);
-    },
-    onSuccess: (data) => {
-      if (!data.token) {
-        setErrorMsg(data.message);
-      } else {
-        console.log('login success', data.token);
-        onLogin(data.token);
-        navi(-1);
-      }
-    },
-  });
+  const { pathname } = useLocation();
 
   const signupMutation = useMutation({
     mutationFn: (data) => {
@@ -108,7 +93,7 @@ export function SignUp() {
     },
     onSuccess: (data) => {
       alert('회원가입 성공');
-      navi('/login');
+      navi('/login', { state: pathname });
     },
     onError: (error) => {
       setErrorMsg(error.message);
