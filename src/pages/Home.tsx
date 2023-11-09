@@ -1,16 +1,17 @@
-import { ThreadsList } from '../components/ThreadsList';
+import HotThreads from '../components/home/HotThreads';
 
-//처음 접속할때 보여준다
+import { Explanation } from '../components/home/Explanation';
+import { useEffect } from 'react';
+//처음 페이지
 export function Home() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
-      <h1>home</h1>
-      <hr />
-      <main>
-        <ThreadsList></ThreadsList>
-      </main>
-
-      <hr />
+      <div className={'logoAndLoginWrapper'}></div>
+      <Explanation></Explanation>
+      <HotThreads></HotThreads>
     </>
   );
 }
