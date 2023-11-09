@@ -25,7 +25,7 @@ export const ThreadBoxWrapper = styled.div<ThreadBoxWrapperProps>`
     background-color: white;
     color: #444444;
 
-    width: 100%;
+    width: 80%;
     border-top: ${(props) => '0.5rem solid' + props.boardcolor};
     margin: 0 auto;
 
@@ -165,7 +165,7 @@ export function Thread({ setDeleteId }: ThreadProps) {
       {!!threadQuery.data && (
         <ThreadBox
           setDeleteId={setDeleteId}
-          thread={threadQuery.data}
+          thread={thread}
           boardcolor={boardcolor}
           boardicon={boardicon}
           id={Number(id)}

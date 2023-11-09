@@ -17,10 +17,6 @@ import { useEffect, useState } from 'react';
 import User from './pages/User';
 import LoginAlert from './components/modal/LoginAlertModal';
 import DeleteModal from './components/modal/Deletemodal';
-import Test from './pages/Test';
-import { data } from './db';
-import axios from 'axios';
-import { writeThread } from './api/api';
 
 export const apiURL = import.meta.env.VITE_API_URL;
 
@@ -69,7 +65,6 @@ function App() {
           <Route path="login" element={<Login></Login>}></Route>
           <Route path="signup" element={<SignUp></SignUp>}></Route>
           <Route path="write/:id?" element={<Write></Write>}></Route>
-          <Route path="test" element={<Test></Test>}></Route>
         </Route>
       </Routes>
       <CreateButton></CreateButton>

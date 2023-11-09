@@ -10,17 +10,20 @@ import { BiSolidCommentDetail } from 'react-icons/bi';
 import { AiFillHeart } from 'react-icons/ai';
 import { getPassedTime, getlimitedString } from '../../utils/utils';
 import { FaRegUser } from 'react-icons/fa';
+import { Threads_Skeleton } from '../skeleton';
 const StyledArticleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   width: 100%;
 
   h1 {
     margin: 0rem;
     margin-top: 6rem;
     margin-bottom: 6rem;
+    text-align: center;
   }
+
   .threads {
     width: 100%;
     margin-top: 0px;
@@ -117,19 +120,20 @@ export default function ThreadsBox() {
   });
   const count = countQuery.data?.count;
   const threads = threadsInBoardQuery.data;
+  const isFetching_threads = threadsInBoardQuery.isFetching;
+  const isFetching_count = countQuery.isFetching;
 
   return (
     <>
-      {
-        <>
-          <StyledArticleWrapper>
-            <h1>
-              {boardName === 'all' ? '전체 글 보기' : `${boardName} 게시판`}{' '}
-            </h1>
-            <p>
-              {' '}
+      <StyledArticleWrapper>
+        <h1>{boardName === 'all' ? '전체 글 보기' : `${boardName} 게시판`} </h1>
+        {isFetching_threads || isFetching_count ? (
+          <Threads_Skeleton></Threads_Skeleton>
+        ) : (
+          <div>
+            <p style={{ textAlign: 'center' }}>
               {boardName === 'all' ? '전체 글' : `${boardName} 게시판`}에는{' '}
-              {count} 개의 리뷰가 있습니다!
+              {count} 개의 리뷰가 있습니다
             </p>
 
             <div className="threads">
@@ -174,12 +178,12 @@ export default function ThreadsBox() {
                   );
                 })}
             </div>
-          </StyledArticleWrapper>
-          <PagenationBox
-            {...{ pageOffset, setpageOffset, pageIdList, count }}
-          ></PagenationBox>
-        </>
-      }
+          </div>
+        )}
+      </StyledArticleWrapper>
+      <PagenationBox
+        {...{ pageOffset, setpageOffset, pageIdList, count }}
+      ></PagenationBox>
     </>
   );
 }

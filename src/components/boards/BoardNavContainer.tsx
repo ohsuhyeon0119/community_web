@@ -15,7 +15,7 @@ export function BoardNavContainer({ boards }: BoardNavContainerProps) {
       setIsMount(true);
       window.scroll(0, 0);
     } else {
-      scroll.scrollToTop({ duration: 300 });
+      scroll.scrollToTop({ duration: 400 });
     }
   }, [boardName]);
 

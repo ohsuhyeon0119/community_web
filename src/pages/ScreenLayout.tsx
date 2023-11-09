@@ -19,6 +19,7 @@ const StyledScreenLayoutWrapper = styled.div`
     grid-area: nav;
   }
   .mainLayout {
+    margin-bottom: 2rem;
     grid-area: main;
   }
 
