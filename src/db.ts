@@ -6,6 +6,16 @@ export const imgDb = [
   'https://image.msscdn.net/images/goods_img/20230308/3132593/3132593_16786916455162_500.jpg',
   'https://image.msscdn.net/images/goods_img/20230308/3132340/3132340_16786918741036_500.jpg',
   'https://image.msscdn.net/images/goods_img/20230126/3039382/3039382_16765949891973_500.jpg',
+  'https://image.msscdn.net/images/goods_img/20230622/3378514/3378514_16965750464930_500.jpg',
+  'https://image.msscdn.net/images/goods/goods_event_banner/2023110610291900000092399.jpg',
+  'https://image.msscdn.net/images/goods_img/20230926/3595879/3595879_16957107811475_500.jpg',
+  'https://image.msscdn.net/images/goods_img/20230803/3442679/3442679_16923249991299_500.jpg',
+  'https://image.msscdn.net/images/goods_img/20220824/2737676/2737676_2_500.jpg',
+  'https://bkbt.co.kr/web/M/22FW/ma/MA_006.jpg',
+  'https://bkbt.co.kr/web/M/22FW/LM8DU760-063/LM8DU760-v1.jpg',
+  'https://image.msscdn.net/images/goods_img/20230526/3328930/3328930_16871590230531_500.jpg',
+  'https://image.msscdn.net/images/goods_img/20230731/3434090/3434090_16907648849908_500.jpg',
+  'https://image.musinsa.com/images/prd_img/2023073110521700000068452.jpg',
 ];
 
 export const data: PostThread[] = [

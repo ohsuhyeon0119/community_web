@@ -120,7 +120,7 @@ export function Nav() {
             }}
             className={'navButton threadContainer'}
           >
-            {nav === 'boards' ? (
+            {nav.includes('boards') || nav.includes('thread') ? (
               <BsFillChatLeftTextFill></BsFillChatLeftTextFill>
             ) : (
               <BsChatLeftText></BsChatLeftText>

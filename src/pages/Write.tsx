@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { apiURL } from '../App';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
@@ -201,10 +201,15 @@ export function Write() {
 
   const { id } = useParams();
   const navi = useNavigate();
+  const { state } = useLocation();
+  const boardname = state !== null && decodeURI(state.pathname).split('/')[2]; // 이전 페이지가 게시판별 게시글페이지였다면,
+
   const title = useSelector((state: RootState) => state.writeReducer.title);
   const content = useSelector((state: RootState) => state.writeReducer.content);
   const [isSelectboxClicked, setIsSelectboxClicked] = useState(false);
-  const [clickedBoard, setClickedBoard] = useState<string>(''); // 선택된 board
+  const [clickedBoard, setClickedBoard] = useState<string>(
+    !!boardname ? (boardname === 'all' ? '' : boardname) : ''
+  ); // 선택된 board : 이전 페이지가 게시판별 게시글페이지였다면, 그 게시판으로 선택된 상태로 시작한다.
   const [boardcolor, setBoardcolor] = useState<string>('');
   const inputRef = useRef<HTMLInputElement | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -264,7 +269,7 @@ export function Write() {
 
       setBoardcolor(clickedBoardColor || '');
       // POST할 데이터 객체
-
+      console.log('진입');
       setClickedBoard(thread?.boardName);
       // 선택한 board의 색깔을 검색
 
@@ -275,6 +280,7 @@ export function Write() {
   // react-query에서 값을 다 받아오면 진행한다.
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!isLoggedIn) {
       navi('/login');
     }
@@ -386,7 +392,11 @@ export function Write() {
             <button
               className="cancelButton"
               onClick={() => {
-                navi(-1);
+                if (state.pathname) {
+                  navi(state.pathname + state.search);
+                } else {
+                  navi('/');
+                }
               }}
             >
               취소

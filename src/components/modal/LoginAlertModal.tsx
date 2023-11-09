@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setAlert, setAlertClose } from '../../module/modal';
 import styled from 'styled-components';
 import { RootState } from '../../module';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const StyledLoginAlertWrapper = styled.div`
   .background {
     position: fixed;
@@ -108,7 +108,7 @@ const StyledLoginAlertWrapper = styled.div`
 
 export default function LoginAlert() {
   const [onAnimate_modalout, set_onAnimate_modalout] = useState<boolean>(false);
-
+  const { pathname, search } = useLocation();
   const navi = useNavigate();
   const alertModal_isvisible = useSelector(
     (state: RootState) => state.modalReducer.alertModal_isvisible
@@ -176,7 +176,7 @@ export default function LoginAlert() {
             <button
               onClick={() => {
                 onSetAlertClose();
-                navi('/login');
+                navi('/login', { state: { pathname, search } });
               }}
               className={'loginButton'}
             >

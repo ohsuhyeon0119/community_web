@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import User from './pages/User';
 import LoginAlert from './components/modal/LoginAlertModal';
 import DeleteModal from './components/modal/Deletemodal';
+import Search from './pages/Search';
 
 export const apiURL = import.meta.env.VITE_API_URL;
 
@@ -59,7 +60,7 @@ function App() {
             path="thread/:id"
             element={<Thread setDeleteId={setDeleteId}></Thread>}
           ></Route>
-          <Route path="search" element={<h1>search</h1>}></Route>
+          <Route path="search" element={<Search></Search>}></Route>
           <Route path="user" element={<User></User>}></Route>
 
           <Route path="login" element={<Login></Login>}></Route>
