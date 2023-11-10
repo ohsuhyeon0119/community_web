@@ -21,7 +21,7 @@ import Search from './pages/Search';
 
 // export const apiURL = import.meta.env.VITE_API_URL;
 export const apiURL =
-  'https://port-0-community-api-3yl7k2blos1nj70.sel5.cloudtype.app';
+  'https://port-0-community-api-3yl7k2blos1nj70.sel5.cloudtype.app/api';
 // 배포용 서버에 접근하고 싶다면 cloutype에서 배포용 서버의 ip주소를 적어준다.
 function App() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
