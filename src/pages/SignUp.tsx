@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { apiURL } from '../App';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { styled } from 'styled-components';
-import { setLogin } from '../module/loginstate';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 const StlyedSignupBoxWrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -84,14 +82,14 @@ export function SignUp() {
   const [inputId, setInputId] = useState('');
   const [inputPassword, setInputPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const dispatch = useDispatch();
+
   const { pathname } = useLocation();
 
   const signupMutation = useMutation({
-    mutationFn: (data) => {
+    mutationFn: (data: { username: string; id: string; password: string }) => {
       return axios.post(`${apiURL}/signup`, data).then((res) => res.data);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       alert('회원가입 성공');
       navi('/login', { state: pathname });
     },
@@ -99,10 +97,6 @@ export function SignUp() {
       setErrorMsg(error.message);
     },
   });
-
-  function onLogin(token: string) {
-    dispatch(setLogin(token));
-  }
 
   return (
     <>

@@ -129,9 +129,7 @@ export default function DeleteModal({
   });
 
   const navi = useNavigate();
-  const deleteModal_isvisible = useSelector(
-    (state: RootState) => state.modalReducer.deleteModal_isvisible
-  );
+
   const dispatch = useDispatch();
 
   function onSetDeleteClose() {

@@ -2,9 +2,9 @@ import axios from 'axios';
 import { apiURL } from '../App';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setLogin } from './../module/loginstate';
-import { RootState } from './../module';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
@@ -94,9 +94,6 @@ export function Login() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const isLoggedIn = useSelector(
-    (state: RootState) => state.loginStateReducer.isLoggedIn
-  );
 
   const dispatch = useDispatch();
   function onLogin(token: string) {
@@ -104,7 +101,7 @@ export function Login() {
   }
 
   const loginMutation = useMutation({
-    mutationFn: (data) => {
+    mutationFn: (data: { id: string; password: string }) => {
       return axios.post(`${apiURL}/login`, data).then((res) => res.data);
     },
     onSuccess: (data) => {

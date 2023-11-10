@@ -1,9 +1,9 @@
 import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useSelector, useDispatch } from 'react-redux';
-import { initLoginState, setLogin, setLogout } from '../../module/loginstate';
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+
 import axios from 'axios';
 import { apiURL } from '../../App';
 import { RootState } from '../../module';
