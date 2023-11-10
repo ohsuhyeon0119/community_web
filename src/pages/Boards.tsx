@@ -1,12 +1,10 @@
 import styled from 'styled-components';
-import { useNavigate, Outlet } from 'react-router-dom';
+
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { apiURL } from '../App';
+
+
 import { getBoards } from '../api/api';
-import { AiOutlineCaretLeft } from 'react-icons/ai';
-import { AiOutlineCaretRight } from 'react-icons/ai';
-import { useLocation } from 'react-router-dom';
+
 import { ThreadsBoxContainer } from '../components/boards/ThreadsBoxContainer';
 import { BoardNavContainer } from '../components/boards/BoardNavContainer';
 

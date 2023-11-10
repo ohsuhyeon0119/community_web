@@ -4,8 +4,6 @@ import styled, { css } from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../module';
 import { useQuery } from '@tanstack/react-query';
-import { apiURL } from '../../App';
-import axios from 'axios';
 import { getUser } from '../../api/api';
 interface ExplanationWrapperProps {
   $isshown: string;

@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { apiURL } from '../../App';
 import styled from 'styled-components';
-import type { Board, Thread } from '../../type/type';
-import { useState, useEffect } from 'react';
+import type { Thread } from '../../type/type';
+import { useState } from 'react';
 import {
   useLocation,
   useNavigate,
@@ -41,7 +41,7 @@ export default function ThreadsBox() {
 
   const params = useParams();
   const boardName = params.boardName;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const pagenum = Number(searchParams.get('pagenum'));
 
   // 페이지 버튼의 번호 1~5 , 6~10 , 11~15.. 씩 끊어주는 offset state

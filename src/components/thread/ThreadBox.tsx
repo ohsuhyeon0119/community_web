@@ -145,7 +145,7 @@ export function ThreadBox({
   thread,
   id,
   boardcolor,
-  boardicon,
+  
   setDeleteId,
 }: ThreadBoxProps) {
   const [toggle_liked, set_toggle_liked] = useState(false);

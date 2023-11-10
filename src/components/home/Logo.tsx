@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledLogoWrapper = styled.div`
   width: 100%;
