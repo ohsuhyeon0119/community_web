@@ -392,7 +392,7 @@ export function Write() {
             <button
               className="cancelButton"
               onClick={() => {
-                if (state.pathname) {
+                if (state !== null) {
                   navi(state.pathname + state.search);
                 } else {
                   navi('/');
