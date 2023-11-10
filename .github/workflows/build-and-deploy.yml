@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: build and deploy
 
 on:
   push:
@@ -6,41 +6,33 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  deploy:
+    runs-on: ubuntu-18.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout source code
+        uses: actions/checkout@master
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Cache node modules
+        uses: actions/cache@v1
         with:
-          node-version: 18 # Node.js 버전을 프로젝트에 맞게 설정
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
       - name: Build
-        run: npm run build # Vite 프로젝트의 빌드 스크립트를 실행
-        working-directory: ./build
+        run: npm run build
 
-      - name: SHOW AWS CLI VERSION
+      - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_EC2_METADATA_DISABLED: true
         run: |
-          aws --version
-
-      - name: Sync Bucket
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_EC2_METADATA_DISABLED: true
-        run: |
-          aws s3 sync \
+          aws s3 cp \
+            --recursive \
             --region ap-northeast-2 \
-            build s3://communitysuhyeonproject \
-            --delete
-        working-directory: ./build
+            build s3://projectforsuhyeon
