@@ -77,7 +77,7 @@ React로 개발하는 리뷰 커뮤니티 웹사이트입니다. 각 유저가 �
 
 # web page 배포용 사이트
 
-<d11ayay5tmnj9l.cloudfront.net>
+[d11ayay5tmnj9l.cloudfront.net]
 
 - 배포 방식 : apiUrl을 localhost에서 cloudtype에 배포해 놓은 배포 서버 url로 변경 -> develop branch에 push 한 후 main branch에 pr 및 merge -> build 및 s3에 deploy 자동화 -> cloudfront에서 배포되어 있는 상태
 - 수정해야 할 것 : env 파일 등 환경 변수 관리 방법 공부 필요
