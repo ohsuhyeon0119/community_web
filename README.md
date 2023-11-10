@@ -73,6 +73,9 @@ React로 개발하는 리뷰 커뮤니티 웹사이트입니다. 각 유저가 �
 - 이미지 업로드하여 db 저장 및 불러오기 기능 미구현
 - Skeleton ui : 게시판 별 게시글 목록에 한해 구현 완료. 그러나 세부 디자인 변경 및 다른 페이지에서의 적용 필요 (\* material UI -> 직접 CSS 디자인으로 변경함)
 
-## 빌드 배포 자동화 (작업 중)
+## 빌드 배포 자동화 (미완성 및 작업 중)
 
-main branch -> s3 -> cloufront 로 자동화 설정 작업 중
+# web page 배포용 사이트 : d11ayay5tmnj9l.cloudfront.net
+
+- 배포 방식 : apiUrl을 localhost에서 cloudtype에 배포해 놓은 배포 서버 url로 변경 -> develop branch에 push 한 후 main branch에 pr 및 merge -> build 및 s3에 deploy 자동화 -> cloudfront에서 배포되어 있는 상태
+- 수정해야 할 것 : env 파일 등 환경 변수 관리 방법 공부 필요
