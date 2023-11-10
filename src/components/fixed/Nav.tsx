@@ -4,12 +4,12 @@ import { BiSolidSearchAlt2 } from 'react-icons/bi';
 
 import { AiFillHome } from 'react-icons/ai';
 import { IconContext } from 'react-icons';
-import { BsChatLeftTextFill, BsFillChatLeftTextFill } from 'react-icons/bs';
+import { BsFillChatLeftTextFill } from 'react-icons/bs';
 import { BsChatLeftText } from 'react-icons/bs';
 import { BiUser } from 'react-icons/bi';
 import { BiSolidUser } from 'react-icons/bi';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styled, { keyframes, css } from 'styled-components';
+import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../module';
 import { setAlert } from '../../module/modal';

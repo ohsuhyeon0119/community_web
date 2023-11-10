@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setAlert, setAlertClose } from '../../module/modal';
+import { useDispatch} from 'react-redux';
+import { setAlertClose } from '../../module/modal';
 import styled from 'styled-components';
-import { RootState } from '../../module';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 const StyledLoginAlertWrapper = styled.div`
   .background {
@@ -110,13 +110,9 @@ export default function LoginAlert() {
   const [onAnimate_modalout, set_onAnimate_modalout] = useState<boolean>(false);
   const { pathname, search } = useLocation();
   const navi = useNavigate();
-  const alertModal_isvisible = useSelector(
-    (state: RootState) => state.modalReducer.alertModal_isvisible
-  );
+
   const dispatch = useDispatch();
-  function onSetAlert() {
-    dispatch(setAlert());
-  }
+
   function onSetAlertClose() {
     dispatch(setAlertClose());
   }

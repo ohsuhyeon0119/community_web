@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setDeleteClose } from '../../module/modal';
 import styled from 'styled-components';
-import { RootState } from '../../module';
 import { useNavigate } from 'react-router-dom';
 import { deleteThreadById } from '../../api/api';
 import { useMutation } from '@tanstack/react-query';
@@ -120,7 +119,7 @@ export default function DeleteModal({
 
   const deletemutation = useMutation({
     mutationFn: () => {
-      return deleteThreadById(deleteId);
+      return deleteThreadById(deleteId as number);
     },
     onSuccess: () => {
       setDeleteId(null);

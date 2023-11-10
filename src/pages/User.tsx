@@ -1,7 +1,7 @@
 import { RootState } from '../module';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery} from '@tanstack/react-query';
 import { setLogout } from '../module/loginstate';
 import { useEffect } from 'react';
 import { getUser } from '../api/api';

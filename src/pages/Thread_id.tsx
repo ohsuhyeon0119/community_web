@@ -6,7 +6,6 @@ import { getBoards } from '../api/api';
 import { ThreadBox } from '../components/thread/ThreadBox';
 import { Board } from '../type/type';
 import ThreadById_Skeleton from '../components/thread/Skeleton';
-import { animateScroll as scroll } from 'react-scroll';
 interface ThreadProps {
   setDeleteId: (id: number | null) => void;
 }

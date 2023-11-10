@@ -160,7 +160,7 @@ export function ThreadItem({ thread, boardColor }: ThreadItemProps) {
     threshold: 0.4,
   });
   const randomNumber = Math.floor(Math.random() * 15);
-  const [randomImg, setRandomImg] = useState(randomNumber);
+  const [randomImg, ] = useState(randomNumber);
 
   // 자신의 boardName에 해당하는 컬러를 가져온다... 그런데 이거는
   // 나중에 변경 필요. 이러면 모든 thread가 api 요청을 하므로
