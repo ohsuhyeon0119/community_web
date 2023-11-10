@@ -1,4 +1,4 @@
-name: build and deploy
+name: Build and Deploy
 
 on:
   push:
@@ -6,33 +6,27 @@ on:
       - main
 
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@master
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Cache node modules
-        uses: actions/cache@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+          node-version: 18 # Node.js 버전을 프로젝트에 맞게 설정
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: npm run build # Vite 프로젝트의 빌드 스크립트를 실행
 
-      - name: Deploy
+      - name: Upload to S3
+        run: |
+          aws s3 cp dist/ s3://projectforsuhyeon/ --recursive
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          aws s3 cp \
-            --recursive \
-            --region ap-northeast-2 \
-            build s3://projectforsuhyeon
